@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="iOS">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Core Animation Basics(译) - blurryssky的博客 | blurryssky&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://blurryssky.github.io/2018/01/04/Core Animation Basics(译)/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">blurryssky&#39;s blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://blurryssky.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-new-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#iOS开发 CoreAnimation(译)" title="iOS开发 CoreAnimation(译)">iOS开发 CoreAnimation(译)</a>
+                        
+                    </div>
+                    <h1>Core Animation Basics(译)</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by blurryssky on
+                        2018-01-04
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreAnimation_guide/CoreAnimationBasics/CoreAnimationBasics.html" target="_blank" rel="noopener">文档地址</a></h1><p><strong>😑有些翻译的不通顺的地方，一定是我还没理解透，有些口水话直接不翻译了</strong></p>
+<h1 id="Core-Animation-Basics-译"><a href="#Core-Animation-Basics-译" class="headerlink" title="Core Animation Basics(译)"></a>Core Animation Basics(译)</h1><p>CoreAnimation提供一种普遍的机制来给你的APP做动画。它不是用来替换view的，而是一种结合view，让view的性能更好并且动起来的一种技术。它主要是通过缓存view的内容到bitmap，bitmap是可以直接被图形硬件处理的。有时候，这可能需要你去重新思考怎么表现和管理你的APP的内容，但大多数时候你都不知道你正在使用CoreAnimation。除了缓存view的内容，CoreAnimation也可以让你制定任意的内容，把它结合在你的view里，并且一样的能够动画。</p>
+<p>使用CoreAnimation来让APP的view和其它可见对象动起来。大部分改变关联到修改这些可见对象的属性。比如，你可以用CoreAnimation来改变view的position, size, opacity。当你改变任意一种时，CoreAnimation在这个属性的当前值和新值之间做动画。一般来说你不会用CoreAnimation去改变一个view的内容，一秒60次，像动画一样。而是用CoreAnimation来移动view的内容，淡入淡出，或者任意的图形变换，或是别的可视性属性。</p>
+<h2 id="Layers-Provide-the-Basis-for-Drawing-and-Animations"><a href="#Layers-Provide-the-Basis-for-Drawing-and-Animations" class="headerlink" title="Layers Provide the Basis for Drawing and Animations"></a>Layers Provide the Basis for Drawing and Animations</h2><p>layer对象是3D空间里的2D表示对象，它是CoreAnimation的核心。和view相同的是，layers管理几何信息，内容，其自身的视图属性。和view不同的是，layers不去定义它自身的外形。layer只是去管理其bitmap的状态信息。bitmap可以是一个view绘制自身的结果或者是一张你指定的图片。因此，在App里使用的layer主要是当做model使用，因为他们主要是管理数据。这个概念很重要需要铭记，因为它会影响到动画行为。</p>
+<h3 id="The-Layer-Based-Drawing-Model"><a href="#The-Layer-Based-Drawing-Model" class="headerlink" title="The Layer-Based Drawing Model"></a>The Layer-Based Drawing Model</h3><p>大部分layer实际上不会去绘制。而是捕获其content，然后把它们缓存到一个bitmap，有时候也被叫做<em>backing store</em>。当频繁地更改layer的属性的时候，其实是在改变其状态信息。当改变触发动画时，CoreAnimation传递layer的bitmap和状态信息给GPU，GPU用新的信息渲染bitmap。在GPU上操作bitmap产生的动画比软件上能做的快得多。</p>
+<p>因为CoreAnimation操作静态的bitmap，基于layer的绘制不同于基于view的绘制技术。基于view的绘制，改变view经常会触发到view的<code>drawRect:</code>方法来用新的参数重绘。但是这消耗很大，因为是在CPU和主线程上完成的。CoreAnimation尽可能的通过操作缓存在硬件上的的bitmap来避免这种开销，并且达到相同或类似的效果。</p>
+<p>虽然CoreAnimation尽可能的用缓存的内容，你的APP仍然需要提供初始内容并且随时更新。</p>
+<h3 id="Layer-Based-Animations"><a href="#Layer-Based-Animations" class="headerlink" title="Layer-Based Animations"></a>Layer-Based Animations</h3><p>一个layer对象的数据和状态信息是和layer在屏幕上呈现的图像内容解耦的。这种解耦使得CoreAnimation处于在旧状态动画到新状态之间的中间部分。比如，改变layer的position，使CoreAnimation从现在的position移动到新指定的position。类似的改变其他属性也引起合适的动画。</p>
+<p>在动画过程中，CoreAnimation在硬件上做了每一帧的绘制。你只需要指定动画的开始和结束，其它的交给CoreAnimation。你也可以指定其它参数，如果没有指明，CoreAnimation也会提供合适的默认值。</p>
+<h2 id="Layer-Objects-Define-Their-Own-Geometry"><a href="#Layer-Objects-Define-Their-Own-Geometry" class="headerlink" title="Layer Objects Define Their Own Geometry"></a>Layer Objects Define Their Own Geometry</h2><p>layer的职责之一是管理其内容的视觉几何关系。包括bounds, positon, 以及是否layer被旋转，缩放，或别的变换。类似view, layer有frame和bounds， layer还有一些view没有的，比如anchor point。</p>
+<h3 id="Layers-Use-Two-Types-of-Coordinate-Systems"><a href="#Layers-Use-Two-Types-of-Coordinate-Systems" class="headerlink" title="Layers Use Two Types of Coordinate Systems"></a>Layers Use Two Types of Coordinate Systems</h3><p>（这里主要是说iOS和OS X的坐标系统不同，略过）</p>
+<h3 id="Anchor-Points-Affect-Geometric-Manipulations"><a href="#Anchor-Points-Affect-Geometric-Manipulations" class="headerlink" title="Anchor Points Affect Geometric Manipulations"></a>Anchor Points Affect Geometric Manipulations</h3><p>（这里主要讲anchor point，略过）</p>
+<h3 id="Layers-Can-Be-Manipulated-in-Three-Dimensions"><a href="#Layers-Can-Be-Manipulated-in-Three-Dimensions" class="headerlink" title="Layers Can Be Manipulated in Three Dimensions"></a>Layers Can Be Manipulated in Three Dimensions</h3><p>每个layer有两种你可以使用的transform矩阵。<code>CALayer</code>的transfrom属性会影响到它和它的sublayers。一般都用这个属性来修改layer本身。比如，你可以用它来缩放或旋转或改变position。<code>sublayerTransform</code>这个属性会额外的影响到sublayers，它主要用来给layer的内容增加透视效果（3D效果）。</p>
+<p>transform通过给矩阵上的数字进行坐标乘算来得到新的坐标来表示变换后的点。由于CoreAnimation的值可以在三维里被指定，每个坐标点有4个值必须被4X4的矩阵乘算。在CoreAnimation里，图形的transfrom被表示成<code>CATransform3D</code>类型。幸运的是，你不必直接取修改这种结构里的值来完成一些基础变换。CoreAnimation提供了一些列方法来创建scale, translation, rotation等等。除此之外，你也可以用<code>key-value coding</code>来修改transform。详建<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreAnimation_guide/Key-ValueCodingExtensions/Key-ValueCodingExtensions.html#//apple_ref/doc/uid/TP40004514-CH12-SW1" target="_blank" rel="noopener">CATransform3D Key Paths</a>。</p>
+<h2 id="🤓Layer-Trees-Reflect-Different-Aspects-of-the-Animation-State"><a href="#🤓Layer-Trees-Reflect-Different-Aspects-of-the-Animation-State" class="headerlink" title="🤓Layer Trees Reflect Different Aspects of the Animation State"></a>🤓Layer Trees Reflect Different Aspects of the Animation State</h2><p>使用CoreAnimation的APP有三组layer对象。每一组都扮演不同的角色：</p>
+<p>在model layer tree的对象（也可简称”layer tree”）是你交互的最多的。这些对象是存储任何动画的目标值的model。当你改变一个layer的属性时，你就使用了这些对象中的一个。</p>
+<p>在presentation tree上的对象包含了正在执行的动画过程中的值，它反映屏幕上layer属性的当前值。你永远也不应该修改这个树上的对象。而是只用它来读取动画的当前值，或许基于当前值来创建一个新的动画。</p>
+<p>在render tree上的对象是动画的实际执行者，并且是CoreAnimation私有的。</p>
+<p>每一组layer对象都像view一样被组织分层。实际上，在一个所有view都有layer的APP上（OS X上不一定所有view都有layer，但iOS一定有），初始的树的结构和view的层级结构一模一样。然而，一个APP可以增加额外的layer，所以，layer之后不一定后view的层级一样。（三组layer的层级结构和view类似，由于layer可以直接被添加，所以layer的层级可能会更多）</p>
+<p><strong>重要：你应该只在动画进行过程中访问presentation tree的对象，它会反映当时屏幕上动画的属性的值，之后就会和model layer tree的值一样</strong></p>
+<h2 id="🤓The-Relationship-Between-Layers-and-Views"><a href="#🤓The-Relationship-Between-Layers-and-Views" class="headerlink" title="🤓The Relationship Between Layers and Views"></a>🤓The Relationship Between Layers and Views</h2><p>layer不是用来替换APP里的view的，你不能仅凭layer来创建一个可视化接口。layer是view的基础设施。明确地说，layer让绘制和动画更简单更高效。然而，有很多事layer做不到。layer不能处理事件，绘制内容（<code>drawRect</code>），参与到响应者链，或者别的很多事。因此，每个APP还是应该有一个或多个view来处理交互事件。</p>
+<p>在iOS，每一个view都有layer，而OS X上只是大多数是, layer确实会占用更多内存，但是它们带来的优势通常比劣势好很多。</p>
+<p>在layer-backed的view里，系统负责创建layer并且和view同步。（其它和OS X有关）</p>
+<p>注意：layer-backed的view，推荐尽可能直接去操作view而不是layer。在iOS，view是layer的一个轻便的解包对象，所以你对layer直接操作而不去操作view，大多数时候是ok的。但有时候可能就会出问题。这篇文档指出了那些陷阱（？在哪）并且希望给你提供正式的使用方式。<br>除了使用layer-backed的view，你也可以直接创建layer来使用，这也是一种性能优化方式，比如，你想用一张图片在许多地方展示，你可以加载图片一次，然后赋值给许多独立的layer，这些layer会持有同一份图片，但不会在内存里赋值一份。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/01/06/博客更新计划/" data-toggle="tooltip" data-placement="top" title="博客更新计划">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/12/29/终于来了/" data-toggle="tooltip" data-placement="top" title="终于来了">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#iOS开发 CoreAnimation(译)" title="iOS开发 CoreAnimation(译)">iOS开发 CoreAnimation(译)</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "blurryssky";
+    var disqus_identifier = "https://blurryssky.github.io/2018/01/04/Core Animation Basics(译)/";
+    var disqus_url = "https://blurryssky.github.io/2018/01/04/Core Animation Basics(译)/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/blurryssky">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; blurryssky&#39;s blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://blurryssky.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-112182838-1';
+    var _gaDomain = 'undefined';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://blurryssky.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
