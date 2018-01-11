@@ -13,11 +13,11 @@
 
     <title>
         
-          终于来了 - blurryssky的博客 | blurryssky&#39;s Blog
+          About Augmented Reality and ARKit(译) - blurryssky的博客 | blurryssky&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="https://blurryssky.github.io/2017/12/29/终于来了/">
+    <link rel="canonical" href="https://blurryssky.github.io/2018/01/11/About Augmented Reality and ARKit(译)/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -155,7 +155,7 @@
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('header_img.jpg')
+        background-image: url('/img/home-new-bg.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -165,14 +165,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#生活" title="生活">生活</a>
+                          <a class="tag" href="/tags/#iOS开发 ARKit(译)" title="iOS开发 ARKit(译)">iOS开发 ARKit(译)</a>
                         
                     </div>
-                    <h1>终于来了</h1>
+                    <h1>About Augmented Reality and ARKit(译)</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by blurryssky on
-                        2017-12-29
+                        2018-01-11
                     </span>
                 </div>
             </div>
@@ -191,36 +191,23 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="终于建了一个博客"><a href="#终于建了一个博客" class="headerlink" title="终于建了一个博客"></a>终于建了一个博客</h1><p>毕业后一直从事iOS开发工作，到现在也是三年多一点了，很享受。</p>
-<p>记得一开始听了一些大道理，其中包括一条，自己建一个技术博客。</p>
-<p>😓接触了一下发现，涉及好多和iOS开发无直接相关的知识，所以一直也没弄起来（中途也搭过一次，在SinaAppEngine(SAE)上弄的，一直觉得怪怪的，没弄多久）。</p>
-<p>🙄现在想想，这个要求其实很为难刚入门iOS开发的我，建一个博客，可能遇到的问题如下：</p>
-<ol>
-<li><p>不具备各种搭建网页的知识，平时有时间能花在iOS SDK上已经不错了，哪有时间到处研究呢。</p>
+                <h1 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a><a href="https://developer.apple.com/documentation/arkit/about_augmented_reality_and_arkit" target="_blank" rel="noopener">文档地址</a></h1><p><strong>😋这几天看了几个AR应用，觉得屌爆了，赶快插播ARKit了解一下</strong></p>
+<h1 id="About-Augmented-Reality-and-ARKit-译"><a href="#About-Augmented-Reality-and-ARKit-译" class="headerlink" title="About Augmented Reality and ARKit(译)"></a>About Augmented Reality and ARKit(译)</h1><p>探索支持的概念，特点，以及练习构建一个AR体验。</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>AR的基本要求，同时也是AR的定义，是创建并且跟踪一个在 用户存在的真实世界空间 和 一个你可以模拟虚拟内容的虚拟世界 之间的通信介质。当你的APP把内容和一个动态的相机图片一起展示出来，用户就体验到AR了：是一种你的虚拟内容是真实世界的一部分的错觉。</p>
+<p>🤓在所有的AR体验里，ARKit使用世界和相机的坐标系统，沿用right-handed convention:Y轴是指向上方，Z轴指向观看者，X轴指向观看者的右方。</p>
+<p>Session configurations可以出于贴近真实世界的原因改变原点和坐标系的方向（参见<code>worldAlignment</code>）。每一个AR session里的anchor定义了它自己的坐标系，也是right-handed convention的；比如，<code>ARFaceAnchor</code>定义了定位面部特征的坐标系。</p>
+<h2 id="How-World-Tracking-Works"><a href="#How-World-Tracking-Works" class="headerlink" title="How World Tracking Works"></a>How World Tracking Works</h2><p>为了创建一个在真实和虚拟空间的通信介质，ARKit用了一种叫做<em>visual-inertial odometry</em>的技术。它结合了iOS设备的运动传感器和通过摄像头获取到的场景的计算机图像识别。ARKit识别场景图片里值得注意的特征，在视频帧之间跟踪这些特征的位置的变化，讲信息与运动传感器数据进行对比。结果是高精准度的设备的位置和运动的模型。</p>
+<p>🤓World tracking也分析和理解场景的内容。使用hit-testing方法（参见<code>ARHitTestResult</code>）来找到摄像头图片里的一个对应真实世界的面的点。如果你在session configuration启用了<code>planeDetection</code>，ARKit会检测摄像头图片里的平面，并且上报他们的位置和大小。你可以用 hit-test的结果 或者 <code>planeDetection</code>检测到的平面 来放置或者交互你的场景你的虚拟内容。</p>
+<p>（初看到这里可能会觉得晕，我举个例子：我想放置一只猫在平面上，那首先需要知道平面的坐标和大小，ARKit有两种办法去获取，一种是主动hit-test，这个和UIResponder的那个不一样，后续会说，另外一种是通过摄像头扫描，代理回调。）</p>
+<h2 id="Best-Practices-and-Limitations"><a href="#Best-Practices-and-Limitations" class="headerlink" title="Best Practices and Limitations"></a>Best Practices and Limitations</h2><p>World tracking是一个不精确的技术。它经常能产生感人的精确度，创造逼真的AR体验。但是这依赖于设备的物理环境，而这通常是不连续的或者难以在真实世界测量。（这句翻译不太顺，大概意思就是由于设备硬件是用户自己掌控的，不像软件完全由开发者掌控，所以跟踪的精确度不能保证。）为了创建一个高质量的AR体验，注意以下要点：</p>
+<ul>
+<li><p>建立良好的光线条件。World tracking涉及图片分析，这要求图片清晰。跟踪的质量会因为摄像头没法看清细节而下降，比如摄像头被指向一片空白的墙或者场景太暗。</p>
 </li>
-<li><p>没有知识积累，很多博客上记录一些鸡毛蒜皮的小知识、答案不完全对的问答、杂乱的复制粘贴，我天生对这种没质量的东西感到排斥，写在一个公共的地方，那要保证它的质量，也是对自己和观众负责。</p>
+<li><p>使用跟踪质量信息给用户反馈。World tracking关联图片分析和设备运动。如果设备移动，ARKit可以对场景有更好的理解，即使是很小的移动。过度的运动，太远，太快，或者摇晃的太厉害，都会造成模糊的图片，或者造成视频帧之间的跟踪特征距离太远，从而降低跟踪质量。<code>ARCamera</code>提供跟踪状态信息，你可以用来开发UI来告诉用户如何解决跟踪质量低的状况。</p>
 </li>
-<li><p>需要保持更新</p>
+<li><p>花时间给plane detection来创造清晰的结果，然后在得到需要的结果后关闭plane detection。plane detection的结果随着时间变化，一个平面第一次被探测到，它的位置和大小可能不精确。随着时间平面停留在场景里，ARKit会改善它的位置和大小的估量。当一个大平面在场景里，在你已经放置了内容的的平面上，ARKit可能会持续的改变plant anchor的位置，大小以及transform。（所以这是需要检测完毕后关掉plane detection的原因？😑，这文档感觉话说一半就完了。。）</p>
 </li>
-</ol>
-<p>😅就是现在的我，可能也不完全满足，当然我现在有些余力去研究一些别的东西，比如现在这个<em>hexo+Github Pages</em>搭建的静态博客，还用了别人写的主题，还是很感谢的，具体就不多说了。总之很多的iOS开发者都没有博客，甚至GitHub都没有，都可以理解，原因太多了。可能是公司业务太忙、可能是生活琐事，不能说他们技术不好。</p>
-<p>但是有点开发经验的人都会明白，除去生活中的各种因素，还花了很多时间在技术上，不管怎么说，加分是一定有的。</p>
-<p>以前我觉得，我有GitHub就行了，不想写那么多字，不想花心思在iOS以外的地方，我的代码就代表我的技术。</p>
-<p>😡直到最近这段时间的连续面试，我的想法变了很多，下面是一些面试后的感受：</p>
-<ol>
-<li><p>我把几年来的技术全部融在了代码里，传到了GitHub上，我认为足够体现我的编码技术。虽然我的简历里写明了GitHub地址，但是能抽空去看的面试官实在太少了，大家都很有多事，谁知道是不是一堆破代码呢（确实是有面试官看过我的GitHub的，而且都聊得不错）。</p>
-</li>
-<li><p>面试的时候，大部分还是理论知识，这和写代码差别很大，写代码你错了，调试一下，修改一下，很快就好了，用不了几分钟；手写或者口答错了，那就失败+1，次数够了就再见。很多理论知识，开发里不常见，如果只关注开发，很可能面试里一个问题也答不上来（比如<em>系统如何实现kvo？系统如何实现weak？__block编译出来的代码和原来的区别？</em>）。</p>
-</li>
-<li><p>我在网上到处翻各种面试题，有些答案我觉得不全对，就继续找很多版本。后来面试的时候我渐渐问题都答上了，有时候面试官说到一半我就知道答案了。但是我在脑海里，这些知识就像一堆书杂乱的堆在一个书架前，并没有摆放进书架，我感到很不舒服，而且，这些知识确实有用，对加深理解有好处，我确实想把他们搜集起来。</p>
-</li>
-<li><p>在我理解了很多的面试题后，我感觉到在代码的设计和很多问题的思考上我又进步了很多，我想要学习更多深一点的知识，仅仅是会用略显肤浅了。</p>
-</li>
-<li><p>中国人这么多，求职者这么多，要如何脱颖而出呢，靠学历靠背景靠工作年限？这是能解决一部分问题，大部分HR也是这么做的，没有更好的办法。但是真正有用的，还是看专业技能，然而专业技能是没有什么证书或者标准的，简历里体现不出来，甚至面试也不能完全体现出来。</p>
-</li>
-</ol>
-<p><strong>(๑•̀ㅂ•́)و✧所以，我下了一个决心，我要在iOS开发社区里出点小名，我要写GitHub也要写博客，我只写有用的东西，别人不看则罢了，看到了就要一锤定音，出不出名其实我是没有办法的，但至少我在成长就没什么好怕的。我不想面试的时候说的口干舌燥，还每次都要自我介绍（有点押韵😑，最近喜欢嘻哈），一般电话里技术面试每周一次，每次一个多小时，通常面3次，有时候还有视频面试，最关键的是，我回答的那些问题，我觉得不能体现我的全部，也就是说，通过这种方式面试别人的时候，不能保证面到的人有多靠谱，很可能说的头头是道，写的代码千疮百孔。</strong></p>
-<p>这是我在面试期间做的决定，甚至也是面试时别人问过我的问题。。我在成都<code>聚美</code>给深圳、广州、杭州、北京都投了简历，陆续拿到了一些offer，最后来了北京，选择了<code>陌陌</code>，<code>陌陌</code>给我的感觉很好，我本身也想要做视频方面的开发。入职后真是觉得太称心如意了，一切都是赞。</p>
+</ul>
 
 
                 <hr>
@@ -230,9 +217,13 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2018/01/04/Core Animation Basics(译)/" data-toggle="tooltip" data-placement="top" title="Core Animation Basics(译)">&larr; Previous Post</a>
+                            <a href="/2018/01/11/Building Your First AR Experience(译)/" data-toggle="tooltip" data-placement="top" title="Building Your First AR Experience(译)">&larr; Previous Post</a>
                         </li>
                     
+                    
+                        <li class="next">
+                            <a href="/2018/01/07/Setting Up Layer Objects(译)/" data-toggle="tooltip" data-placement="top" title="Setting Up Layer Objects(译)">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -264,7 +255,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#生活" title="生活">生活</a>
+                          <a class="tag" href="/tags/#iOS开发 ARKit(译)" title="iOS开发 ARKit(译)">iOS开发 ARKit(译)</a>
                         
                     </div>
                 </section>
@@ -285,8 +276,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blurryssky";
-    var disqus_identifier = "https://blurryssky.github.io/2017/12/29/终于来了/";
-    var disqus_url = "https://blurryssky.github.io/2017/12/29/终于来了/";
+    var disqus_identifier = "https://blurryssky.github.io/2018/01/11/About Augmented Reality and ARKit(译)/";
+    var disqus_url = "https://blurryssky.github.io/2018/01/11/About Augmented Reality and ARKit(译)/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
