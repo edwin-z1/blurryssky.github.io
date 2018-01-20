@@ -165,7 +165,11 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#iOS开发 CoreAnimation(译)" title="iOS开发 CoreAnimation(译)">iOS开发 CoreAnimation(译)</a>
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#CoreAnimation" title="CoreAnimation">CoreAnimation</a>
+                        
+                          <a class="tag" href="/tags/#CoreAnimation（官方文档翻译）" title="CoreAnimation（官方文档翻译）">CoreAnimation（官方文档翻译）</a>
                         
                     </div>
                     <h1>Core Animation Basics(译)</h1>
@@ -192,7 +196,7 @@
                 post-container">
 
                 <h1 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreAnimation_guide/CoreAnimationBasics/CoreAnimationBasics.html" target="_blank" rel="noopener">文档地址</a></h1><p><strong>😑有些翻译的不通顺的地方，一定是我还没理解透，有些口水话直接不翻译了</strong></p>
-<h1 id="Core-Animation-Basics-译"><a href="#Core-Animation-Basics-译" class="headerlink" title="Core Animation Basics(译)"></a>Core Animation Basics(译)</h1><p>CoreAnimation提供一种普遍的机制来给你的APP做动画。它不是用来替换view的，而是一种结合view，让view的性能更好并且动起来的一种技术。它主要是通过缓存view的内容到bitmap，bitmap是可以直接被图形硬件处理的。有时候，这可能需要你去重新思考怎么表现和管理你的APP的内容，但大多数时候你都不知道你正在使用CoreAnimation。除了缓存view的内容，CoreAnimation也可以让你制定任意的内容，把它结合在你的view里，并且一样的能够动画。</p>
+<h1 id="Core-Animation-Basics"><a href="#Core-Animation-Basics" class="headerlink" title="Core Animation Basics"></a>Core Animation Basics</h1><p>CoreAnimation提供一种普遍的机制来给你的APP做动画。它不是用来替换view的，而是一种结合view，让view的性能更好并且动起来的一种技术。它主要是通过缓存view的内容到bitmap，bitmap是可以直接被图形硬件处理的。有时候，这可能需要你去重新思考怎么表现和管理你的APP的内容，但大多数时候你都不知道你正在使用CoreAnimation。除了缓存view的内容，CoreAnimation也可以让你制定任意的内容，把它结合在你的view里，并且一样的能够动画。</p>
 <p>使用CoreAnimation来让APP的view和其它可见对象动起来。大部分改变关联到修改这些可见对象的属性。比如，你可以用CoreAnimation来改变view的position, size, opacity。当你改变任意一种时，CoreAnimation在这个属性的当前值和新值之间做动画。一般来说你不会用CoreAnimation去改变一个view的内容，一秒60次，像动画一样。而是用CoreAnimation来移动view的内容，淡入淡出，或者任意的图形变换，或是别的可视性属性。</p>
 <h2 id="Layers-Provide-the-Basis-for-Drawing-and-Animations"><a href="#Layers-Provide-the-Basis-for-Drawing-and-Animations" class="headerlink" title="Layers Provide the Basis for Drawing and Animations"></a>Layers Provide the Basis for Drawing and Animations</h2><p>layer对象是3D空间里的2D表示对象，它是CoreAnimation的核心。和view相同的是，layers管理几何信息，内容，其自身的视图属性。和view不同的是，layers不去定义它自身的外形。layer只是去管理其bitmap的状态信息。bitmap可以是一个view绘制自身的结果或者是一张你指定的图片。因此，在App里使用的layer主要是当做model使用，因为他们主要是管理数据。这个概念很重要需要铭记，因为它会影响到动画行为。</p>
 <h3 id="The-Layer-Based-Drawing-Model"><a href="#The-Layer-Based-Drawing-Model" class="headerlink" title="The Layer-Based Drawing Model"></a>The Layer-Based Drawing Model</h3><p>大部分layer实际上不会去绘制。而是捕获其content，然后把它们缓存到一个bitmap，有时候也被叫做<em>backing store</em>。当频繁地更改layer的属性的时候，其实是在改变其状态信息。当改变触发动画时，CoreAnimation传递layer的bitmap和状态信息给GPU，GPU用新的信息渲染bitmap。在GPU上操作bitmap产生的动画比软件上能做的快得多。</p>
@@ -237,12 +241,6 @@
                 
 
                 
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
-                
 
             </div>
     <!-- Side Catalog Container -->
@@ -262,7 +260,11 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#iOS开发 CoreAnimation(译)" title="iOS开发 CoreAnimation(译)">iOS开发 CoreAnimation(译)</a>
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#CoreAnimation" title="CoreAnimation">CoreAnimation</a>
+                        
+                          <a class="tag" href="/tags/#CoreAnimation（官方文档翻译）" title="CoreAnimation（官方文档翻译）">CoreAnimation（官方文档翻译）</a>
                         
                     </div>
                 </section>
@@ -278,21 +280,6 @@
 
 
 
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "blurryssky-name";
-    var disqus_identifier = "https://blurryssky.github.io/2018/01/04/Core Animation Basics(译)/";
-    var disqus_url = "https://blurryssky.github.io/2018/01/04/Core Animation Basics(译)/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
 
 
 

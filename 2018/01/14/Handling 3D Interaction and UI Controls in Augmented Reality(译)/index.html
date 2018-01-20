@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="iOS">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Handling 3D Interaction and UI Controls in Augmented Reality(译) - blurryssky的博客 | blurryssky&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://blurryssky.github.io/2018/01/14/Handling 3D Interaction and UI Controls in Augmented Reality(译)/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">blurryssky&#39;s blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://blurryssky.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-new-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#AR" title="AR">AR</a>
+                        
+                          <a class="tag" href="/tags/#ARKit（官方文档翻译）" title="ARKit（官方文档翻译）">ARKit（官方文档翻译）</a>
+                        
+                    </div>
+                    <h1>Handling 3D Interaction and UI Controls in Augmented Reality(译)</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by blurryssky on
+                        2018-01-14
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a><a href="https://developer.apple.com/documentation/arkit/handling_3d_interaction_and_ui_controls_in_augmented_reality" target="_blank" rel="noopener">文档地址</a></h2><p><strong>🤓这篇文章主要是提供一些提示和示范，来让我们做AR APP的时候增强用户体验。</strong></p>
+<h1 id="Handling-3D-Interaction-and-UI-Controls-in-Augmented-Reality"><a href="#Handling-3D-Interaction-and-UI-Controls-in-Augmented-Reality" class="headerlink" title="Handling 3D Interaction and UI Controls in Augmented Reality"></a>Handling 3D Interaction and UI Controls in Augmented Reality</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>AR给用户提供新的交互方式。但是，许多人性化交互设计规则依然有效。确保逼真的AR效果也需要精致的3D资源设计和渲染。The iOS Human Interface Guidelines包含了AR的人性化交互规则。这个工程展示了许多方法去应用这些规则，然后创造出沉浸式的AR体验。示例APP提供了一个简单的AR体验，允许用户在真实场景里放置一个或多个虚拟物体，然后用直接的手势去安排他们。APP提供了用户交互线索，来帮助用户明白AR体验的状态和他们的交互选项。</p>
+<p>（🙂不重要的话就不翻译了）</p>
+<h2 id="Placing-Virtual-Objects"><a href="#Placing-Virtual-Objects" class="headerlink" title="Placing Virtual Objects"></a>Placing Virtual Objects</h2><p>帮助用户明白何时去查找一个表面并且防止一个物体。<code>FocusSquare</code>类在AR视图里绘制了一个正方形边框，给用户提示ARKit world tracking的状态。</p>
+<p>正方形会根据场景深度改变大小和方向，并且用突出的动画在打开和关闭状态之间切换，来表示是否ARKit检测到了适合放置物体的平面。在用户放置物体之后，对焦的正方形会消失,保持隐藏直到用户把摄像头对准到另外的表面。</p>
+<p>🤓<strong>在用户放置物体时给予合适的反馈。</strong>当用户选择一个虚拟物体去放置时，sample(示例工程)里的<code>setPosition(_:relativeTo:smoothMovement)</code>方法用<code>FocusSquare</code>的简单的在屏幕中大概的位置粗略的放置一个物体，即时ARKit还没在那个地方检测到平面。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">guard</span> <span class="keyword">let</span> cameraTransform = session.currentFrame?.camera.transform,</span><br><span class="line">    <span class="keyword">let</span> focusSquarePosition = focusSquare.lastPosition <span class="keyword">else</span> &#123;</span><br><span class="line">    statusViewController.showMessage(<span class="string">"CANNOT PLACE OBJECT\nTry moving left or right."</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">virtualObjectInteraction.selectedObject = virtualObject</span><br><span class="line">virtualObject.setPosition(focusSquarePosition, relativeTo: cameraTransform, smoothMovement: <span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">updateQueue.async &#123;</span><br><span class="line">    <span class="keyword">self</span>.sceneView.scene.rootNode.addChildNode(virtualObject)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个位置可能不够精确到用户想放在真实世界的位置，但也足够接近了，而且非常快速。</p>
+<p>随着时间，ARKit探测平面和重新预估它们的位置，调用<code>renderer(_:didAdd:for:)</code>和<code>renderer(_:didUpdate:for:)</code>代理方法来上报结果。在这些方法里，sample调用了<code>adjustOntoPlaneAnchor(_:using:)</code>方法来决定是否之前放置的物体接近一个探测到的平面了。如果平面附近的话，用一个很细微的动画把物体移动过去，这样它看起来就在用户选择的位置上了。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果在附近就移动过去 (5厘米内).</span></span><br><span class="line"><span class="keyword">let</span> verticalAllowance: <span class="type">Float</span> = <span class="number">0.05</span></span><br><span class="line"><span class="keyword">let</span> epsilon: <span class="type">Float</span> = <span class="number">0.001</span> <span class="comment">// 如果小于1mm就不移动了</span></span><br><span class="line"><span class="keyword">let</span> distanceToPlane = <span class="built_in">abs</span>(planePosition.y) <span class="comment">// 😓为何用y呢</span></span><br><span class="line"><span class="keyword">if</span> distanceToPlane &gt; epsilon &amp;&amp; distanceToPlane &lt; verticalAllowance &#123;</span><br><span class="line">    <span class="type">SCNTransaction</span>.begin()</span><br><span class="line">    <span class="type">SCNTransaction</span>.animationDuration = <span class="type">CFTimeInterval</span>(distanceToPlane * <span class="number">500</span>) <span class="comment">// Move 2 mm per second.</span></span><br><span class="line">    <span class="type">SCNTransaction</span>.animationTimingFunction = <span class="type">CAMediaTimingFunction</span>(name: kCAMediaTimingFunctionEaseInEaseOut)</span><br><span class="line">    position.y = anchor.transform.columns.<span class="number">3</span>.y</span><br><span class="line">    <span class="type">SCNTransaction</span>.commit()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="User-Interaction-with-Virtual-Objects"><a href="#User-Interaction-with-Virtual-Objects" class="headerlink" title="User Interaction with Virtual Objects"></a>User Interaction with Virtual Objects</h2><p>🤓<strong>允许用户用基本的，熟悉的手势去交互虚拟物体。</strong>sample里用了一根手指tap，一或者两根手指pan，以及两指rotate手势来让用户摆放和转动虚拟物体，<code>VirtualObjectInteraction</code>类负责这些手势。</p>
+<p>🤓<strong>通常来讲，保持交互简单。</strong>当拖拽一个虚拟物体（见<code>translate(_:basedOn:infinitePlane:)</code>），sample APP限制了它只能在二维平面上移动。同样的，因为它是在平面上，旋转手势（见<code>didRotate(_:)</code>）只让物体围绕Y轴转动，所以物体仍然在平面上。</p>
+<p>🤓<strong>在大概的位置响应可交互的虚体物体的手势。</strong>sample里<code>objectInteracting(with:in:)</code>方法根据手势提供的点击区域使用了hit tests。点击虚拟物体的边界时，这个方法让用户的触碰能够影响到虚拟物体，即使触碰区域不在物体的可见区域上。通过给多个手势提供多个hit tests，这个方法让用户的触碰交互更加流畅：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">0</span>..&lt;gesture.numberOfTouches &#123;</span><br><span class="line">    <span class="keyword">let</span> touchLocation = gesture.location(ofTouch: index, <span class="keyword">in</span>: view)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 寻找是否有物体在触碰位置下</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> object = sceneView.virtualObject(at: touchLocation) &#123;</span><br><span class="line">        <span class="keyword">return</span> object</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 找不到就把手势中心的物体返回，也可能还是没有</span></span><br><span class="line"><span class="keyword">return</span> sceneView.virtualObject(at: gesture.center(<span class="keyword">in</span>: view))</span><br></pre></td></tr></table></figure>
+<p>🤓<strong>考虑是否用户创造的对象需要缩放。</strong>AR放置逼真的虚拟物体，它们可能是在用户的世界里自然呈现的，所以保持它原本的大小会增加逼真程度。所以sample没有增加缩放的手势。另外，由于不提供缩放手势，sample防止用户迷惑，用户可能会分不清缩放手势是改变了物体的大小还是改变了物体的远近。（如果你想提供的话，也可以加pinch手势）</p>
+<p>🤓<strong>留意潜在的手势冲突。</strong><code>ThresholdPanGesture</code>是一个<code>UIPanGestureRecognizer</code>的子类，它提供的效果是，延迟手势的识别效果直到手势已经确实移动并且超过了一个门槛。<code>touchesMoved(with:)</code>方法用这个类来让用户平滑的在拖拽和旋转手势之间过渡。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">touchesMoved</span><span class="params">(<span class="number">_</span> touches: Set&lt;UITouch&gt;, with event: UIEvent)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.touchesMoved(touches, with: event)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> translationMagnitude = translation(<span class="keyword">in</span>: view).length</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 根据手指的数量调整门槛</span></span><br><span class="line">    <span class="keyword">let</span> threshold = <span class="type">ThresholdPanGesture</span>.threshold(forTouchCount: touches.<span class="built_in">count</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> !isThresholdExceeded &amp;&amp; translationMagnitude &gt; threshold &#123;</span><br><span class="line">        isThresholdExceeded = <span class="literal">true</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Set the overall translation to zero as the gesture should now begin.</span></span><br><span class="line">        setTranslation(.zero, <span class="keyword">in</span>: view)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>🤓<strong>保证虚体物体平滑的移动。</strong>sample的<code>setPosition(_:relativeTo:smoothMovement)</code>方法在拖拽物体的手势识别的区域和这个物体的历史位置上做了篡改。通过算最近的点的平均位置，这个方法既创造了平滑的移动，也避免了物体被甩在用户的手势后面：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> smoothMovement &#123;</span><br><span class="line">    <span class="keyword">let</span> hitTestResultDistance = simd_length(positionOffsetFromCamera)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 添加最新的位置，并且保证最多纪录10个最近的距离。</span></span><br><span class="line">    recentVirtualObjectDistances.append(hitTestResultDistance)</span><br><span class="line">    recentVirtualObjectDistances = <span class="type">Array</span>(recentVirtualObjectDistances.suffix(<span class="number">10</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> averageDistance = recentVirtualObjectDistances.average!</span><br><span class="line">    <span class="keyword">let</span> averagedDistancePosition = simd_normalize(positionOffsetFromCamera) * averageDistance</span><br><span class="line">    simdPosition = cameraWorldPosition + averagedDistancePosition</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    simdPosition = cameraWorldPosition + positionOffsetFromCamera</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>🤓<strong>探索更多有趣的手势交互。</strong>在AR体验里，pan代表的是，移动一根手指跨越屏幕，这并不是唯一的自然地拖拽物体到新位置的方式。用户也可能下意识的手指按住物体在屏幕上不动，然后移动设备。（😂）</p>
+<p>sample提供这类手势，在拖拽期间不停调用<code>updateObjectToCurrentTrackingPosition()</code>方法，即使用户的手势触碰区域改变了。如果在拖拽时设备移动了，这个方法计算了用户触碰区域的新的位置，并且让移动按预期的进行。（😲厉害了我的哥）</p>
+<h2 id="Entering-Augmented-Reality"><a href="#Entering-Augmented-Reality" class="headerlink" title="Entering Augmented Reality"></a>Entering Augmented Reality</h2><p>🤓<strong>标识出状态指示并且让用户参与进来。</strong>sample通过一个漂浮的文字的视图，展示了AR session的状态文字提示，并且指明了交互建议。<code>StatusViewController</code>管理这个视图，在给用户短暂的时间阅读提示后，就会渐变消失，或者是重要的状态信息就保持可见，直到用户去修正了问题。（比如把摄像头移到合适的位置而不是对着墙。）</p>
+<h2 id="Handling-Problems"><a href="#Handling-Problems" class="headerlink" title="Handling Problems"></a>Handling Problems</h2><p>🤓<strong>如果事与愿违允许用户重置或者刷新。</strong>sample添加了一个reset按钮，在屏幕的右上角总是可见，允许用户无视当前状态重启AR。见<code>restartExperience()</code>方法。</p>
+<p>🤓<strong>只在能用的设备上添加AR功能。</strong>sample需要ARKit作为其核心功能，所以在<code>Info.plist</code>的<code>UIRequiredDeviceCapabilities</code>里定义了arkit键，这个键防止在不能支持AR的设备上安装该APP。</p>
+<p>如果你的APP只是用AR作为一个次要的功能，使用<code>isSupported</code>方法来决定是否能展示这些需要ARkit的功能。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/01/11/Building Your First AR Experience(译)/" data-toggle="tooltip" data-placement="top" title="Building Your First AR Experience(译)">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#AR" title="AR">AR</a>
+                        
+                          <a class="tag" href="/tags/#ARKit（官方文档翻译）" title="ARKit（官方文档翻译）">ARKit（官方文档翻译）</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/blurryssky">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; blurryssky&#39;s blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://blurryssky.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-112182838-1';
+    var _gaDomain = 'blurryssky.github.io';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://blurryssky.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

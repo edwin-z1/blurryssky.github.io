@@ -165,7 +165,11 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#iOS开发 CoreAnimation(译)" title="iOS开发 CoreAnimation(译)">iOS开发 CoreAnimation(译)</a>
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#CoreAnimation" title="CoreAnimation">CoreAnimation</a>
+                        
+                          <a class="tag" href="/tags/#CoreAnimation（官方文档翻译）" title="CoreAnimation（官方文档翻译）">CoreAnimation（官方文档翻译）</a>
                         
                     </div>
                     <h1>Setting Up Layer Objects(译)</h1>
@@ -192,7 +196,7 @@
                 post-container">
 
                 <h1 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreAnimation_guide/SettingUpLayerObjects/SettingUpLayerObjects.html" target="_blank" rel="noopener">文档地址</a></h1><p><strong>😑有些翻译的不通顺的地方，一定是我还没理解透，有些口水话直接不翻译了</strong></p>
-<h1 id="Setting-Up-Layer-Objects-译"><a href="#Setting-Up-Layer-Objects-译" class="headerlink" title="Setting Up Layer Objects(译)"></a>Setting Up Layer Objects(译)</h1><p>layer是CoreAnimation的核心。layer管理APP的视觉的内容，提供给改变内容风格和视觉外形的选项。iOS APP已经自动打开了layer支持，OS X APP必须显示指定打开支持。一旦启用，你需要知道如何配置和操作这些layer。</p>
+<h1 id="Setting-Up-Layer-Objects"><a href="#Setting-Up-Layer-Objects" class="headerlink" title="Setting Up Layer Objects"></a>Setting Up Layer Objects</h1><p>layer是CoreAnimation的核心。layer管理APP的视觉的内容，提供给改变内容风格和视觉外形的选项。iOS APP已经自动打开了layer支持，OS X APP必须显示指定打开支持。一旦启用，你需要知道如何配置和操作这些layer。</p>
 <h2 id="Enabling-Core-Animation-Support-in-Your-App"><a href="#Enabling-Core-Animation-Support-in-Your-App" class="headerlink" title="Enabling Core Animation Support in Your App"></a>Enabling Core Animation Support in Your App</h2><p>(主要针对OS X开发者，略)</p>
 <h2 id="Changing-the-Layer-Object-Associated-with-a-View"><a href="#Changing-the-Layer-Object-Associated-with-a-View" class="headerlink" title="Changing the Layer Object Associated with a View"></a>Changing the Layer Object Associated with a View</h2><p>layer-backed view默认创建一个CALayer类型的对象，大多数时候你也不需要别的layer类型的对象。但是CoreAnimation提供不同的layer类，每一种都提供一些特别的功能。选择一个不同的layer可能会增强你的APP体验或者简单的完成一种特别的功能。比如，CATiledLayer是用来优化显示打图片的。</p>
 <h3 id="Changing-the-Layer-Class-Used-by-UIView"><a href="#Changing-the-Layer-Class-Used-by-UIView" class="headerlink" title="Changing the Layer Class Used by UIView"></a>Changing the Layer Class Used by UIView</h3><p>你可以重写<code>layerClass</code>方法来返回一个不同的类对象。大多数iOS上的view创建一个CALayer对象并且用它来作为它的内容的backing store。大多数你自己的view，这个默认选择是好选择，你应该不要去改变它。但是某些情况你可能会发现另外的layer类更合适。比如，你可能想在下列情况来改变layer的类:</p>
@@ -284,12 +288,6 @@
                 
 
                 
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
-                
 
             </div>
     <!-- Side Catalog Container -->
@@ -309,7 +307,11 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#iOS开发 CoreAnimation(译)" title="iOS开发 CoreAnimation(译)">iOS开发 CoreAnimation(译)</a>
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#CoreAnimation" title="CoreAnimation">CoreAnimation</a>
+                        
+                          <a class="tag" href="/tags/#CoreAnimation（官方文档翻译）" title="CoreAnimation（官方文档翻译）">CoreAnimation（官方文档翻译）</a>
                         
                     </div>
                 </section>
@@ -325,21 +327,6 @@
 
 
 
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "blurryssky-name";
-    var disqus_identifier = "https://blurryssky.github.io/2018/01/07/Setting Up Layer Objects(译)/";
-    var disqus_url = "https://blurryssky.github.io/2018/01/07/Setting Up Layer Objects(译)/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
 
 
 
