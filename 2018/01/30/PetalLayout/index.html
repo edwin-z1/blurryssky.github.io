@@ -13,11 +13,11 @@
 
     <title>
         
-          About - blurryssky的博客 | blurryssky&#39;s Blog
+          PetalLayout - blurryssky的博客 | blurryssky&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="https://blurryssky.github.io/about/">
+    <link rel="canonical" href="https://blurryssky.github.io/2018/01/30/PetalLayout/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -147,176 +147,205 @@
 
 
     <!-- Main Content -->
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/about-bg.jpg')">
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://blurryssky.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-new-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>About</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">Hey, this is Kaijun.</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#custom UI" title="custom UI">custom UI</a>
+                        
+                    </div>
+                    <h1>PetalLayout</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by blurryssky on
+                        2018-01-30
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
-
-<!-- USE SIDEBAR -->
     <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                <blockquote>
-<p>写写代码，做做设计，看看产品。<br>世界那么大，多玩玩看看。</p>
-</blockquote>
-<p>9月21日上午，阳光明媚，鲜花斗艳。帕洛阿尔托苹果店里欢声笑语，人头攒动。苹果公司首席执行官蒂姆·库克先生在店长欧阳猛南陪同下，不远千米，深入到一线店面，为那里的员工带去节曰的问候和良好的祝愿。<br><br>“果粉们，你们辛苦了，我代表某果公司，祝你们身体健康，生活幸福，工作成功！”库克亲切慰问广大员工和顾客，并就iOS7、iPhone 5S和iPhone 5C的销售状况进行调研。 <br><br>“您现在每月工资有多少？肾5S拿到了吗？”在店里，库克关切地向果粉们问起这一问题。当听说果粉们排到了5S，库克满意地连连点头。接着他指出，近年来苹果事业发展取得巨大成就，特别是iPhone影响剧增，老百姓对iOS满意度逐步提高，在这个转变过程中，果粉的辛勤工作功不可没。<br><br>库克看到一个中国小朋友在排队买iPhone 5S，亲切的问：“5288元一台能承受不？”小朋友回答到：“能！”当得知这位小朋友卖了一个肾来买iPhone 5S时，库克叮嘱道：“在支持苹果的同时，也要爱护身体。”<br><br>库克与购买苹果手机的果粉们兴致勃勃地参观了苹果专卖店，和员工们拉了拉家常，并饶有兴趣地玩了四盘切西瓜游戏，与普通员工同乐。<br><br>在交谈中，库克多次关心地强调：“有了iPhone 5C，就不卖iPhone 5了。”并对顾客说：“好好休息，身体是革命的本钱嘛！”会谈始终在亲切友好的气氛中进行。<br><br>顾客们就库克的讲话达成了广泛的共识，并承认世界上只有iOS最流畅，要紧紧的团结在以库克先生为首席执行官的苹果公司集体周围，一心一意抓学习，聚精会神谋发展。<br><br><br>帕洛阿尔托苹果专卖店当日原则通过《蒂姆·库克首席执行官在加州新苹果店的讲话纪要》，并下发各分店认真学习、研讨。</p>
-<p style="text-align:right;"><br>    —— <a href="http://www.zhihu.com/question/19687065" target="_blank" rel="noopener">李书航 － 什么是「共产中文腔调」？ </a><br></p>
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-                <!-- 如果开启评论功能 -->
+                <h1 id="诞生原因"><a href="#诞生原因" class="headerlink" title="诞生原因"></a>诞生原因</h1><p>😅我的天，我真是到处挖坑，先列一个未完成列表和原因：</p>
+<ul>
+<li><p>面试题和知识总结，这个还没开始，主要是想直接研究新知识。</p>
+</li>
+<li><p>CoreAnimation（官方文档翻译），翻译了一点，和第一个原因差不多，我对CoreAnimation也比较熟悉，想花时间在陌生的地方，但是我一定会更完的。</p>
+</li>
+<li><p>ARKit（官方文档翻译），这个官方文档差不多了，还有一篇文章是iphoneX才能用的，暂时不译了；其他关于AR的技术，比如空间画笔，近期会总结。</p>
+</li>
+</ul>
+<p>关于custom UI，我本身一直在Github上维护着一个<code>10000ui</code>的<em>swift</em>代码库，而这几天工作的时候遇到一个需求可能会需要去修改一下<code>UICollectionView</code>的布局，就去研究了一下<code>UICollectionViewLayout</code>这个类。其实一直想要去subclass这个类做一个UI，加上以前做过一个像花瓣一样从中心绽开的选择菜单，当时是用按钮和循环做的，这次就索性用<code>UICollectionViewLayout</code>的子类去重置一次，顺便填补知识空缺。</p>
+<h1 id="PetalLayout"><a href="#PetalLayout" class="headerlink" title="PetalLayout"></a>PetalLayout</h1><p><strong>那么先看看效果图吧</strong><br><img src="PetalLayout.gif" alt="."></p>
+<p>sample里我实现了三种效果:</p>
+<ul>
+<li><p>依次插入删除</p>
+</li>
+<li><p>随机位置随机个数插入删除</p>
+</li>
+<li><p>依次多个插入删除</p>
+</li>
+</ul>
+<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><h3 id="官网文档"><a href="#官网文档" class="headerlink" title="官网文档"></a><a href="https://developer.apple.com/documentation/uikit/uicollectionviewlayout" target="_blank" rel="noopener">官网文档</a></h3><h3 id="objc-io"><a href="#objc-io" class="headerlink" title="objc.io"></a><a href="https://objccn.io/issue-3-3" target="_blank" rel="noopener">objc.io</a></h3><h3 id="raywenderlich"><a href="#raywenderlich" class="headerlink" title="raywenderlich"></a><a href="https://www.raywenderlich.com/164608/uicollectionview-custom-layout-tutorial-pinterest-2" target="_blank" rel="noopener">raywenderlich</a></h3><p>建议大家还是从文档看起，不要心浮气躁，把握每个细节。如果暂时没时间，只是想快速了解一下，我也可以简单介绍下:</p>
+<p>🤓<code>UICollectionViewLayoutAttributes</code>，首先需要说一下这个类，这个类用于存放cell的信息，比如frame、alpha，系统会自己在合适的时候为cell赋值，我们也是通过这个类和系统的<code>UICollectionView</code>传递信息。</p>
+<p><code>UICollectionViewLayout</code>是一个抽象类，用于管理collection view里的cell、supplementary view、decoration view的<code>UICollectionViewLayoutAttributes</code>信息，使用方法就是去继承它，然后重写以下方法:(当然，系统有实现一个<code>UICollectionViewFlowLayout</code>可以直接用)</p>
+<ul>
+<li><strong>collectionViewContentSize</strong> 这个方法会决定scroll view的滑动大小，自己去计算布局里的所有内容大小就好。</li>
+<li><strong>prepare</strong> 每次更新都会走这个方法，<code>reloadData</code>和<code>insert</code>、<code>delete</code>等操作，可以在这里预先配置好位置信息。</li>
+<li><strong>layoutAttributesForElements(in:)</strong> 决定显示哪些cell，节省内存你懂得吧。</li>
+<li><strong>layoutAttributesForItem(at:)</strong> 有时候系统会在<code>reloadData</code>和<code>insert</code>、<code>delete</code>等操作时询问某个indexPath的布局信息，所以需要实现这个方法。</li>
+</ul>
+<p>以上就是必须实现的方法了，还是很简单吧。</p>
+<p>关于<code>insert</code>、<code>delete</code>动画，需要额外重写以下方法:</p>
+<ul>
+<li><strong>initialLayoutAttributesForAppearingItemAtIndexPath</strong> 询问某个indexPath的起始位置。</li>
+<li><strong>finalLayoutAttributesForDisappearingItemAtIndexPath</strong> 询问某个indexPath的终点位置。</li>
+</ul>
+<p>注意一点，我们上面的方法已经实现了item的默认位置，这里我们实现的是，从<code>initialLayoutAttributes...</code>到默认位置，比如<code>insert</code>，从默认位置到<code>finalLayoutAttributes...</code>，比如<code>delete</code>。</p>
+<p>其他的问题都可以在文档或者代码里找到答案，想要晃两眼或者我说两句就学会是不靠谱的。</p>
+<p>🤔PetalLayout的代码只有200行，但是我依然把它分类到<em>Complex</em>下，因为我觉得这个含金量还是比较高的，我写的还是有瑕疵(在随机多个插入删除的时候)，但是修改起来我觉得比较困难，希望厉害的同学给我提pull request吧。</p>
+<p>最后附上sample地址</p>
+<h3 id="10000ui"><a href="#10000ui" class="headerlink" title="10000ui"></a><a href="https://github.com/blurryssky/10000ui" target="_blank" rel="noopener">10000ui</a></h3>
+
+                <hr>
+
                 
-                    <hr>
 
+                <ul class="pager">
                     
-
                     
-                    <!-- disqus 评论框 start -->
-                    <div class="comment">
-                        <div id="disqus_thread" class="disqus-thread"></div>
-                    </div>
-                    <!-- disqus 评论框 end -->
+                        <li class="next">
+                            <a href="/2018/01/14/Handling 3D Interaction and UI Controls in Augmented Reality(译)/" data-toggle="tooltip" data-placement="top" title="Handling 3D Interaction and UI Controls in Augmented Reality(译)">Next Post &rarr;</a>
+                        </li>
                     
+                </ul>
 
+                
 
-                    
-
-                    
-                    <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-                    <script type="text/javascript">
-                        /* * * CONFIGURATION VARIABLES * * */
-                        var disqus_shortname = "blurrysskys-name";
-                        var disqus_identifier = "https://blurryssky.github.io/about/index.html";
-                        var disqus_url = "https://blurryssky.github.io/about/index.html";
-
-                        (function() {
-                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                        })();
-
-                        
-                    </script>
-                    <!-- disqus 公共JS代码 end -->
-                    
-
-
-
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
                 
 
             </div>
+    <!-- Side Catalog Container -->
+        
+
     <!-- Sidebar Container -->
+
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <!-- no hr -->
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                       
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
                         
-                            
-                            <a href="/tags/#iOS开发" title="iOS开发" rel="6">iOS开发</a>
-                            
-                        
-                            
-                            <a href="/tags/#AR" title="AR" rel="3">AR</a>
-                            
-                        
-                            
-                            <a href="/tags/#ARKit（官方文档翻译）" title="ARKit（官方文档翻译）" rel="3">ARKit（官方文档翻译）</a>
-                            
-                        
-                            
-                        
-                            
-                            <a href="/tags/#CoreAnimation" title="CoreAnimation" rel="2">CoreAnimation</a>
-                            
-                        
-                            
-                            <a href="/tags/#CoreAnimation（官方文档翻译）" title="CoreAnimation（官方文档翻译）" rel="2">CoreAnimation（官方文档翻译）</a>
-                            
-                        
-                            
-                            <a href="/tags/#生活" title="生活" rel="2">生活</a>
-                            
+                          <a class="tag" href="/tags/#custom UI" title="custom UI">custom UI</a>
                         
                     </div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-
-                        
-                            <img src="/img/avatar.jpg" />
-                        
-
-                        
-                            <p>改变就是好事!</p>
-                        
-
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-
-                            
-
-                            
-
-                            
-                                <li>
-                                    <a target="_blank"  href="https://github.com/blurryssky">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-                            
-                            
-                            
-                        </ul>
-                    </div>
-                </section>
-                
                 <!-- Friends Blog -->
                 
             </div>
-        
+
+        </div>
     </div>
-</div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "blurrysskys-name";
+    var disqus_identifier = "https://blurryssky.github.io/2018/01/30/PetalLayout/";
+    var disqus_url = "https://blurryssky.github.io/2018/01/30/PetalLayout/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
 
 
     <!-- Footer -->
