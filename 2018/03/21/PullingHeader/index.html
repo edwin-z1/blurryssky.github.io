@@ -90,14 +90,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -193,9 +193,9 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="闲聊一下"><a href="#闲聊一下" class="headerlink" title="闲聊一下"></a>闲聊一下</h1><p>😅年会的时候公司给每个人发了一部iphoneX，看来苹果关于iphoneX的人脸识别教程翻译要提上日程了。</p>
+                <h2 id="闲聊一下"><a href="#闲聊一下" class="headerlink" title="闲聊一下"></a>闲聊一下</h2><p>😅年会的时候公司给每个人发了一部iphoneX，看来苹果关于iphoneX的人脸识别教程翻译要提上日程了。</p>
 <p>年前公司最后一次需求评审大会，PM想要这个效果，类似淘宝天猫京东很多APP下拉转场的效果，当时是被开发拒绝了，而我倒觉得可以试着做一下，然后让它加入<a href="https://github.com/blurryssky/10000ui" target="_blank" rel="noopener">10000ui</a>。这个UI其实年前就做了大概，年后回来一直在做需求。这几天需求做完了，回头来完善了一下它，趁此空挡赶紧更新下博客。</p>
-<h1 id="PullingHeader"><a href="#PullingHeader" class="headerlink" title="PullingHeader"></a>PullingHeader</h1><p><img src="PullingHeader.gif" alt="."></p>
+<h2 id="PullingHeader"><a href="#PullingHeader" class="headerlink" title="PullingHeader"></a>PullingHeader</h2><p><img src="PullingHeader.gif" alt="."></p>
 <h3 id="通过两份协议，开发者可以高度自定义下拉动画、刷新和转场条件"><a href="#通过两份协议，开发者可以高度自定义下拉动画、刷新和转场条件" class="headerlink" title="通过两份协议，开发者可以高度自定义下拉动画、刷新和转场条件:"></a>通过两份协议，开发者可以高度自定义下拉动画、刷新和转场条件:</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">PullingRefreshing</span>: <span class="title">NSObjectProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">shouldRefresh</span><span class="params">(fraction: CGFloat)</span></span> -&gt; <span class="type">Bool</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">stateDidUpdate</span><span class="params">(<span class="number">_</span> state: PullingState)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">PullingTransitioning</span>: <span class="title">NSObjectProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">shouldTransition</span><span class="params">(fraction: CGFloat)</span></span> -&gt; <span class="type">Bool</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>PullingRefreshing</code>需要让自定义的下拉刷新的view去遵循:</p>
 <ul>
@@ -211,14 +211,21 @@
 <h3 id="通过PullingHeader对象，来管理下拉过程"><a href="#通过PullingHeader对象，来管理下拉过程" class="headerlink" title="通过PullingHeader对象，来管理下拉过程:"></a>通过<code>PullingHeader</code>对象，来管理下拉过程:</h3><p>通过上面的协议，<code>PullingHeader</code>会自动变化状态，并且在初始化方法中，<code>PullingHeader</code>需要得到所有信息。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">init</span>(scrollView: <span class="type">UIScrollView</span>!,</span><br><span class="line">         pullToRefreshView toRefresh: <span class="type">PullingRefreshing</span>!,</span><br><span class="line">         refreshClosure: ((<span class="type">PullingHeader</span>) -&gt; <span class="type">Void</span>)!,</span><br><span class="line">         pullToTransitionViewController toTransition: <span class="type">PullingTransitioning</span>? = <span class="literal">nil</span>,</span><br><span class="line">         transitionClosure: ((<span class="type">PullingHeader</span>) -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
 <p>因为转场不是必要的，所以后面两个参数可以是nil。</p>
-<h6 id="注意-scrollView、pullToRefreshView、pullToTransitionViewController-都是weak属性"><a href="#注意-scrollView、pullToRefreshView、pullToTransitionViewController-都是weak属性" class="headerlink" title="注意: scrollView、pullToRefreshView、pullToTransitionViewController 都是weak属性"></a>注意: <code>scrollView、pullToRefreshView、pullToTransitionViewController</code> 都是<code>weak</code>属性</h6><p>🤔具体的使用方法，可以参照代码，每个UI都有对应的sample view controller去使用它的demo。</p>
-<h1 id="相关参考资料"><a href="#相关参考资料" class="headerlink" title="相关参考资料"></a>相关参考资料</h1><h3 id="MJRefresh"><a href="#MJRefresh" class="headerlink" title="MJRefresh"></a><a href="https://github.com/CoderMJLee/MJRefresh" target="_blank" rel="noopener">MJRefresh</a></h3><h1 id="sample地址"><a href="#sample地址" class="headerlink" title="sample地址"></a>sample地址</h1><h3 id="10000ui"><a href="#10000ui" class="headerlink" title="10000ui"></a><a href="https://github.com/blurryssky/10000ui" target="_blank" rel="noopener">10000ui</a></h3>
+<blockquote>
+<p><code>scrollView、pullToRefreshView、pullToTransitionViewController</code> 都是<code>weak</code>属性</p>
+</blockquote>
+<p>🤔具体的使用方法，可以参照代码，每个UI都有对应的sample view controller去使用它的demo。</p>
+<h2 id="相关参考资料"><a href="#相关参考资料" class="headerlink" title="相关参考资料"></a>相关参考资料</h2><h3 id="MJRefresh"><a href="#MJRefresh" class="headerlink" title="MJRefresh"></a><a href="https://github.com/CoderMJLee/MJRefresh" target="_blank" rel="noopener">MJRefresh</a></h3><h2 id="sample地址"><a href="#sample地址" class="headerlink" title="sample地址"></a>sample地址</h2><h3 id="10000ui"><a href="#10000ui" class="headerlink" title="10000ui"></a><a href="https://github.com/blurryssky/10000ui" target="_blank" rel="noopener">10000ui</a></h3>
 
                 <hr>
 
                 
 
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/03/26/Creating Face-Based AR Experiences(译)/" data-toggle="tooltip" data-placement="top" title="Creating Face-Based AR Experiences(译)">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="iOS">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Creating Face-Based AR Experiences(译) - blurryssky的博客 | blurryssky&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://blurryssky.github.io/2018/03/26/Creating Face-Based AR Experiences(译)/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">blurryssky&#39;s blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://blurryssky.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-new-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#AR" title="AR">AR</a>
+                        
+                          <a class="tag" href="/tags/#ARKit(官方文档翻译）" title="ARKit(官方文档翻译）">ARKit(官方文档翻译）</a>
+                        
+                    </div>
+                    <h1>Creating Face-Based AR Experiences(译)</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by blurryssky on
+                        2018-03-26
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a><a href="https://developer.apple.com/documentation/arkit/creating_face_based_ar_experiences" target="_blank" rel="noopener">文档地址</a></h2><p><strong>😋使用ARKit来做人脸识别，一切变得简单不少，还可以使用超多的脸部细节</strong></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>文档上有sample app下载，它提供了一个简单的UI，允许我们在有TrueDepth前置摄像头的设备上(目前只有iphoneX)上切换选择4种AR效果。</p>
+<ul>
+<li>无任何AR效果的摄像</li>
+<li>由<code>ARKit</code>提供的面部网膜，并且自动预估真实世界的方向光线环境。</li>
+<li>在用户面部贴上虚拟的3D内容（3D内容可以被用户的脸遮挡）。</li>
+<li>一个会跟着用户面部变化而动画的简单机器人。</li>
+</ul>
+<h3 id="Start-a-Face-Tracking-Session-in-a-SceneKit-View"><a href="#Start-a-Face-Tracking-Session-in-a-SceneKit-View" class="headerlink" title="Start a Face Tracking Session in a SceneKit View"></a>Start a Face Tracking Session in a SceneKit View</h3><p>像其他的<code>ARKit</code>用法一样，脸部跟踪需要配置和启动<code>ARSession</code>对象，然后把摄像图片和虚拟内容在一个<em>view</em>上渲染。关于更多的设置<em>session</em>和<em>view</em>的细节,请看<a href="">About Augmented Reality and ARKit</a>、<a href="">Building Your First AR Experience</a>。这里使用<code>SceneKit</code>来展示AR体验，也可以用<code>SpriteKit</code>或用<code>Metal</code>打造自定义的渲染器，请看（<a href="">ARSKView and Displaying an AR Experience with Metal</a>）。启用面部跟踪，需要创建一个<code>ARFaceTrackingConfiguration</code>实例，配置它的属性，把它传有<em>view</em>关联的<code>ARSession</code>对象的<strong>run(_:options:)</strong>方法，示例如下。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">guard</span> <span class="type">ARFaceTrackingConfiguration</span>.isSupported <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line"><span class="keyword">let</span> configuration = <span class="type">ARFaceTrackingConfiguration</span>()</span><br><span class="line">configuration.isLightEstimationEnabled = <span class="literal">true</span></span><br><span class="line">session.run(configuration, options: [.resetTracking, .removeExistingAnchors])</span><br></pre></td></tr></table></figure>
+<p>记得使用<strong>ARFaceTrackingConfiguration.isSupported</strong>来检查设备是否支持。</p>
+<h3 id="Track-the-Position-and-Orientation-of-a-Face"><a href="#Track-the-Position-and-Orientation-of-a-Face" class="headerlink" title="Track the Position and Orientation of a Face"></a>Track the Position and Orientation of a Face</h3><p>面部追踪启用时，<code>ARKit</code>自动为运行的<em>AR session</em>添加<code>ARFaceAnchor</code>对象，这个对象包含了用户脸部的信息，包括位置和方向。</p>
+<blockquote>
+<p><code>ARKit</code>只给探测和提供一个用户的信息。如果多张脸在摄像头内，<code>ARKit</code>选择最大最清晰的那张脸</p>
+</blockquote>
+<p>在基于<code>SceneKit</code>的AR体验里，你可以在对应的<em>face anchor</em>里用<strong>(_:didAdd:for:)</strong>添加3D内容。<code>ARKit</code>为这个<em>anchor</em>添加一个<code>SceneKit</code><em>node</em>，并且在每一帧更新<em>node</em>的位置和方向，所以你给这个<em>node</em>添加的任何<code>SceneKit</code>内容自动的跟随用户脸部的位置和方向。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">renderer</span><span class="params">(<span class="number">_</span> renderer: SCNSceneRenderer, didAdd node: SCNNode, <span class="keyword">for</span> anchor: ARAnchor)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 持有`faceNode`，这样在切换内容时不必重启*session*。</span></span><br><span class="line">    faceNode = node</span><br><span class="line">    serialQueue.async &#123;</span><br><span class="line">        <span class="keyword">self</span>.setupFaceNodeContent()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<strong>renderer(_:didAdd:for:)</strong>方法里调用了<strong>setupFaceNodeContent</strong>方法来为<code>SceneKit</code>内容添加<strong>faceNode</strong>。如果你在代码里改变<strong>showsCoordinateOrigin</strong>变量的值，会在<em>node</em>上增加一个可见的x/y/z坐标轴，标识<em>face anchor</em>坐标系的原点。 </p>
+<h3 id="Use-Face-Geometry-to-Model-the-User’s-Face"><a href="#Use-Face-Geometry-to-Model-the-User’s-Face" class="headerlink" title="Use Face Geometry to Model the User’s Face"></a>Use Face Geometry to Model the User’s Face</h3><p><code>ARKit</code>提供一个粗略的匹配用户脸部的大小、形状、拖布结构、当前表情的3D网状几何<em>geometry</em>。<code>ARKit</code>也提供<br><code>ARSCNFaceGeometry</code>类，提供一种简单的方式来可视化这个网。</p>
+<p>你的AR应用可以用这个网来放置或者绘制贴脸内容。比如，可以提供一个半透明的纹理到这个<em>geometry</em>上，你可以在用户皮肤上画虚拟的纹身或者化妆。</p>
+<p>为了创建一个<code>SceneKit</code>脸部几何，初始化一个<code>ARSCNFaceGeometry</code>对象:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This relies on the earlier check of `ARFaceTrackingConfiguration.isSupported`.</span></span><br><span class="line"><span class="keyword">let</span> device = sceneView.device!</span><br><span class="line"><span class="keyword">let</span> maskGeometry = <span class="type">ARSCNFaceGeometry</span>(device: device)!</span><br></pre></td></tr></table></figure>
+<p><strong>setupFaceNodeContent</strong>方法给<em>scene</em>添加了一个包含<em>face geometry</em>的<em>node</em>，也就是一个面部。由于这个<em>node</em>是被回调方法提供的<em>face node</em>的<em>child node</em>，所以它会自动的跟踪用户脸部的位置和方向。但是为了也让它跟踪用户脸部的形状，包括眨眼、讲话、各种面部表情，你需要在<strong>renderer(_:didUpdate:for:)</strong>更新它的<em>geometry</em>。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">renderer</span><span class="params">(<span class="number">_</span> renderer: SCNSceneRenderer, didUpdate node: SCNNode, <span class="keyword">for</span> anchor: ARAnchor)</span></span> &#123;</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> faceAnchor = anchor <span class="keyword">as</span>? <span class="type">ARFaceAnchor</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">    </span><br><span class="line">    virtualFaceNode?.update(withFaceAnchor: faceAnchor)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">update</span><span class="params">(withFaceAnchor anchor: ARFaceAnchor)</span></span> &#123;</span><br><span class="line">    <span class="keyword">let</span> faceGeometry = geometry <span class="keyword">as</span>! <span class="type">ARSCNFaceGeometry</span></span><br><span class="line">    faceGeometry.update(from: anchor.geometry)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Place-3D-Content-on-the-User’s-Face"><a href="#Place-3D-Content-on-the-User’s-Face" class="headerlink" title="Place 3D Content on the User’s Face"></a>Place 3D Content on the User’s Face</h3><p>另一个使用<code>ARKit</code>提供的面部网络的用法是创建一个<em>occlusion geometry</em>(😦这个有点抽象，我确实不知道怎么翻译)。<em>occlusion geometry</em>是一个3D模型，它不渲染任何可见内容（允许相机图片穿过），但是阻断了其他虚拟内容的相机的<em>view</em>。</p>
+<p>这个技巧创造一种脸部和虚拟对象交互的假象，即使脸是一个2D相机图片，而虚拟内容是一个被渲染的3D对象。比如，如果你放置一个<em>occlusion geometry</em>和虚拟墨镜在用户脸上，脸可以挡住墨镜的框架。</p>
+<p>为了给脸创建一个<em>occlusion geometry</em>，从创建一个<code>ARSCNFaceGeometry</code>对象开始，参照之前的例子。然而，代替设置给对象的<em>material</em>一个可见的外形的是，设置<em>material</em>的渲染depth:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">geometry.firstMaterial!.colorBufferWriteMask = []</span><br><span class="line">occlusionNode = <span class="type">SCNNode</span>(geometry: geometry)</span><br><span class="line">occlusionNode.renderingOrder = -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>因为渲染了<em>depth</em>，其他被渲染的对象正确的出现在了它的前面或者后面。由于它没有渲染颜色，相机图像也出现了。sample里结合了这个技巧和<code>SceneKit</code>对象，放置在了用户眼前，制造了一种真实的被用户的鼻子遮挡的图像。</p>
+<p>（其实不太理解原理）</p>
+<h3 id="Animate-a-Character-with-Blend-Shapes"><a href="#Animate-a-Character-with-Blend-Shapes" class="headerlink" title="Animate a Character with Blend Shapes"></a>Animate a Character with Blend Shapes</h3><p>除了上面的例子外，<code>ARKit</code>也提供一种更抽象的用户面部表情模型，用一个<code>blendShapes</code>字典的形式。你可以用字典里的多个值去控制你的2D或者3D资源的动画参数，创建一个特征（比如头像或者木偶），跟随用户的面部移动和表情。</p>
+<p>作为一个<em>blend shape</em>的基础示例，这个sample包括了一个简单的机器人头部模型，是用<code>SceneKit</code>的基础形状创造的。（在<em>robotHead.scn</em>查看）</p>
+<p>为了获取用户当前的面部表情，在<strong>renderer(_:didUpdate:for:)</strong> 里读取<em>face anchor</em>的<code>blendShapes</code>字典：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">update</span><span class="params">(withFaceAnchor faceAnchor: ARFaceAnchor)</span></span> &#123;</span><br><span class="line">    blendShapes = faceAnchor.blendShapes</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，检查字典的键值对来计算动画参数。这里有52个独一无二的<code>ARFaceAnchor.BlendShapeLocation</code>参数。你的app可以尽可能少也可以尽可能多的使用它们来创造你想要的艺术效果。在这个示例工程里，<code>RobotHead</code>完成了这个计算，转换<code>eyeBlinkLeft</code>和<code>eyeBlinkRight</code>参数到机器人眼睛的大小参数，用<code>jawOpen</code>来偏移机器人下巴。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> blendShapes: [<span class="type">ARFaceAnchor</span>.<span class="type">BlendShapeLocation</span>: <span class="type">Any</span>] = [:] &#123;</span><br><span class="line">    <span class="keyword">didSet</span> &#123;</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> eyeBlinkLeft = blendShapes[.eyeBlinkLeft] <span class="keyword">as</span>? <span class="type">Float</span>,</span><br><span class="line">            <span class="keyword">let</span> eyeBlinkRight = blendShapes[.eyeBlinkRight] <span class="keyword">as</span>? <span class="type">Float</span>,</span><br><span class="line">            <span class="keyword">let</span> jawOpen = blendShapes[.jawOpen] <span class="keyword">as</span>? <span class="type">Float</span></span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        eyeLeftNode.scale.z = <span class="number">1</span> - eyeBlinkLeft</span><br><span class="line">        eyeRightNode.scale.z = <span class="number">1</span> - eyeBlinkRight</span><br><span class="line">        jawNode.position.y = originalJawY - jawHeight * jawOpen</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/03/21/PullingHeader/" data-toggle="tooltip" data-placement="top" title="PullingHeader">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
+                        
+                          <a class="tag" href="/tags/#AR" title="AR">AR</a>
+                        
+                          <a class="tag" href="/tags/#ARKit(官方文档翻译）" title="ARKit(官方文档翻译）">ARKit(官方文档翻译）</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "blurrysskys-name";
+    var disqus_identifier = "https://blurryssky.github.io/2018/03/26/Creating Face-Based AR Experiences(译)/";
+    var disqus_url = "https://blurryssky.github.io/2018/03/26/Creating Face-Based AR Experiences(译)/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/blurryssky">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; blurryssky&#39;s blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://blurryssky.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-112182838-1';
+    var _gaDomain = 'blurryssky.github.io';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://blurryssky.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -90,14 +90,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -196,7 +196,7 @@
                 post-container">
 
                 <h2 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a><a href="https://developer.apple.com/documentation/arkit/handling_3d_interaction_and_ui_controls_in_augmented_reality" target="_blank" rel="noopener">文档地址</a></h2><p><strong>🤓这篇文章主要是提供一些提示和示范，来让我们做AR APP的时候增强用户体验。</strong></p>
-<h1 id="Handling-3D-Interaction-and-UI-Controls-in-Augmented-Reality"><a href="#Handling-3D-Interaction-and-UI-Controls-in-Augmented-Reality" class="headerlink" title="Handling 3D Interaction and UI Controls in Augmented Reality"></a>Handling 3D Interaction and UI Controls in Augmented Reality</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>AR给用户提供新的交互方式。但是，许多人性化交互设计规则依然有效。确保逼真的AR效果也需要精致的3D资源设计和渲染。The iOS Human Interface Guidelines包含了AR的人性化交互规则。这个工程展示了许多方法去应用这些规则，然后创造出沉浸式的AR体验。示例APP提供了一个简单的AR体验，允许用户在真实场景里放置一个或多个虚拟物体，然后用直接的手势去安排他们。APP提供了用户交互线索，来帮助用户明白AR体验的状态和他们的交互选项。</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>AR给用户提供新的交互方式。但是，许多人性化交互设计规则依然有效。确保逼真的AR效果也需要精致的3D资源设计和渲染。The iOS Human Interface Guidelines包含了AR的人性化交互规则。这个工程展示了许多方法去应用这些规则，然后创造出沉浸式的AR体验。示例APP提供了一个简单的AR体验，允许用户在真实场景里放置一个或多个虚拟物体，然后用直接的手势去安排他们。APP提供了用户交互线索，来帮助用户明白AR体验的状态和他们的交互选项。</p>
 <p>（🙂不重要的话就不翻译了）</p>
 <h2 id="Placing-Virtual-Objects"><a href="#Placing-Virtual-Objects" class="headerlink" title="Placing Virtual Objects"></a>Placing Virtual Objects</h2><p>帮助用户明白何时去查找一个表面并且防止一个物体。<code>FocusSquare</code>类在AR视图里绘制了一个正方形边框，给用户提示ARKit world tracking的状态。</p>
 <p>正方形会根据场景深度改变大小和方向，并且用突出的动画在打开和关闭状态之间切换，来表示是否ARKit检测到了适合放置物体的平面。在用户放置物体之后，对焦的正方形会消失,保持隐藏直到用户把摄像头对准到另外的表面。</p>
