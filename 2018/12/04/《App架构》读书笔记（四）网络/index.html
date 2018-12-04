@@ -13,11 +13,11 @@
 
     <title>
         
-          SlideMenuViewController - blurryssky的博客 | blurryssky&#39;s Blog
+          《App架构》读书笔记（四）网络 - blurryssky的博客 | blurryssky&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="https://blurryssky.github.io/2018/11/27/SlideMenuViewController/">
+    <link rel="canonical" href="https://blurryssky.github.io/2018/12/04/《App架构》读书笔记（四）网络/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -167,14 +167,12 @@
                         
                           <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
                         
-                          <a class="tag" href="/tags/#custom UI" title="custom UI">custom UI</a>
-                        
                     </div>
-                    <h1>SlideMenuViewController</h1>
+                    <h1>《App架构》读书笔记（四）网络</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by blurryssky on
-                        2018-11-27
+                        2018-12-04
                     </span>
                 </div>
             </div>
@@ -193,17 +191,16 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="SlideMenuViewController"><a href="#SlideMenuViewController" class="headerlink" title="SlideMenuViewController"></a>SlideMenuViewController</h1><p>非常常见的菜单选择，新的设计思路，使用UICollectionView，配合RxSwift代码，精简。</p>
-<p><img src="SlideMenuViewController.gif" alt="."></p>
-<h2 id="通过两份协议，设置页面和更新页面"><a href="#通过两份协议，设置页面和更新页面" class="headerlink" title="通过两份协议，设置页面和更新页面:"></a>通过两份协议，设置页面和更新页面:</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SlideMenuViewControllerDataSource</span>: <span class="title">NSObjectProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">slideMenuViewController</span><span class="params">(<span class="number">_</span> slideMenuViewController: UIViewController, viewControllerForItemAt index: Int)</span></span> -&gt; <span class="type">UIViewController</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SlideMenuViewControllerDelegate</span>: <span class="title">NSObjectProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">slideMenuViewController</span><span class="params">(<span class="number">_</span> slideMenuViewController: UIViewController, didChange viewController: UIViewController)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><strong>slideMenuViewController(:, viewControllerForItemAt:)</strong> 这个方法可以根据index去决定需要显示的view controller，并且该index对应的view controller会被持有。只在该index第一次被选中时会触发。</p>
-</li>
-<li><p><strong>slideMenuViewController(:, didChange:)</strong> 这个方法在每次选中不同index都会回调，方便更新之前创建的view controller。</p>
-</li>
-</ul>
-<p>🤔具体的使用方法，可以参照代码。</p>
-<h2 id="sample地址"><a href="#sample地址" class="headerlink" title="sample地址"></a>sample地址</h2><h3 id="10000ui"><a href="#10000ui" class="headerlink" title="10000ui"></a><a href="https://github.com/blurryssky/10000ui" target="_blank" rel="noopener">10000ui</a></h3>
+                <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>现在讨论的是关于网络层的处理，假设使用MVC架构，书中对比了两种方式：</p>
+<ol>
+<li>Controller拥有网络。Controller直接控制发起网络请求，创建model，是比较常见的方式。如果要添加数据缓存到本地，通常这些逻辑也会写在controller里，使controller变得臃肿。它最大的优点是逻辑简单，目前大部分开发者都是这样写的。</li>
+<li>Model拥有网络。Model从网络获取数据后，controller通过观察model变更通知来更新。这会在处理起来稍微麻烦一些，但是它能让代码分层，并且更符合单向数据流。而且如果要添加缓存功能的话，也能很轻松的添加在model层，由于controller本来就是观察model变更来更新的，model可以在一开始的时候就读取缓存，然后再请求网络。不仅逻辑结合的更加紧密，controller也变得简洁了。这里的model会和普通的model稍微不一样一点，其实是一个类似于数据管理者的概念，比如现在需要请求一个列表，产生一个数组，那这个数组其实会成为model的一个属性，而不是models。</li>
+</ol>
+<p><strong>注意：这里说的“观察model变更”，不是说一定要用<code>KVO</code>或者<code>Notification</code>，普通的<code>block</code>或者<code>delegate</code>也算，它泛指一切能产生消息反馈的技术，当然<code>RAC</code>和<code>RxSwift</code>是最优雅的技术了</strong></p>
+<p>书中举了一些例子，我就不一一列举了，大家如果感到模糊，最好自己查阅原书。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>目前我其实也是用的第1种方式，主要是因为习惯和简单，现在有很多的网络框架，以及Apple的Codable协议或者很多第三方转model框架，让网络请求和组织model的代码变得很少。但我也必须承认，还是第2种方式更好，通过观察model来进行UI更新，能最大程度的保证状态同步，并且统一了代码的更新路径，无论model作何更新，view都会自动同步；除此之外，代码的分层也更加完善了，controller更加简洁了。在页面之间传递数据的时候，同一个model（这个model是类而不是结构体或者枚举）在后面的页面被更新时，前面的页面也能自动更新，这也是一个不言而喻的优点。</p>
+<p>如果是MVVM架构的话，组织网络请求本来就会被放在view-model里，所以MVVM其实本来就是第2种架构模式。不论用不用MVVM，响应式编程都是非常棒的体验，也是未来的趋势，在熟练使用之后，会有相逢恨晚的感觉。</p>
+
 
                 <hr>
 
@@ -211,13 +208,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/11/30/《App架构》读书笔记（一）介绍/" data-toggle="tooltip" data-placement="top" title="《App架构》读书笔记（一）介绍">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/11/27/辩解/" data-toggle="tooltip" data-placement="top" title="辩解">Next Post &rarr;</a>
+                            <a href="/2018/12/03/《App架构》读书笔记（三）MVVM/" data-toggle="tooltip" data-placement="top" title="《App架构》读书笔记（三）MVVM">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -252,8 +245,6 @@
                        
                           <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
                         
-                          <a class="tag" href="/tags/#custom UI" title="custom UI">custom UI</a>
-                        
                     </div>
                 </section>
                 
@@ -273,8 +264,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blurrysskys-name";
-    var disqus_identifier = "https://blurryssky.github.io/2018/11/27/SlideMenuViewController/";
-    var disqus_url = "https://blurryssky.github.io/2018/11/27/SlideMenuViewController/";
+    var disqus_identifier = "https://blurryssky.github.io/2018/12/04/《App架构》读书笔记（四）网络/";
+    var disqus_url = "https://blurryssky.github.io/2018/12/04/《App架构》读书笔记（四）网络/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

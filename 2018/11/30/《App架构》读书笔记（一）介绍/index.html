@@ -13,11 +13,11 @@
 
     <title>
         
-          SlideMenuViewController - blurryssky的博客 | blurryssky&#39;s Blog
+          《App架构》读书笔记（一）介绍 - blurryssky的博客 | blurryssky&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="https://blurryssky.github.io/2018/11/27/SlideMenuViewController/">
+    <link rel="canonical" href="https://blurryssky.github.io/2018/11/30/《App架构》读书笔记（一）介绍/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -167,14 +167,12 @@
                         
                           <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
                         
-                          <a class="tag" href="/tags/#custom UI" title="custom UI">custom UI</a>
-                        
                     </div>
-                    <h1>SlideMenuViewController</h1>
+                    <h1>《App架构》读书笔记（一）介绍</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by blurryssky on
-                        2018-11-27
+                        2018-11-30
                     </span>
                 </div>
             </div>
@@ -193,17 +191,51 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="SlideMenuViewController"><a href="#SlideMenuViewController" class="headerlink" title="SlideMenuViewController"></a>SlideMenuViewController</h1><p>非常常见的菜单选择，新的设计思路，使用UICollectionView，配合RxSwift代码，精简。</p>
-<p><img src="SlideMenuViewController.gif" alt="."></p>
-<h2 id="通过两份协议，设置页面和更新页面"><a href="#通过两份协议，设置页面和更新页面" class="headerlink" title="通过两份协议，设置页面和更新页面:"></a>通过两份协议，设置页面和更新页面:</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SlideMenuViewControllerDataSource</span>: <span class="title">NSObjectProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">slideMenuViewController</span><span class="params">(<span class="number">_</span> slideMenuViewController: UIViewController, viewControllerForItemAt index: Int)</span></span> -&gt; <span class="type">UIViewController</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SlideMenuViewControllerDelegate</span>: <span class="title">NSObjectProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">slideMenuViewController</span><span class="params">(<span class="number">_</span> slideMenuViewController: UIViewController, didChange viewController: UIViewController)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <h1 id="《App架构》书籍地址"><a href="#《App架构》书籍地址" class="headerlink" title="《App架构》书籍地址"></a><a href="https://objccn.io/products/app-architecture" target="_blank" rel="noopener">《App架构》书籍地址</a></h1><p><a href="https://www.objc.io" target="_blank" rel="noopener">objc</a>真的是非常棒的网站，上面有很多高质量的文章，非常适合学习和反复学习。以及它的中国翻译版本<a href="https://objccn.io" target="_blank" rel="noopener">objccn</a>，正如它所说<strong>为中国 Apple 开发社区带来最佳实践和先进技术</strong>。</p>
+<p>近期读了objccn出品的《App架构》(《App Architecture》的翻译版本)，觉得收获很大。其中特别有帮助的章节是关于MVC、MVVM架构和关于网络层的讨论，其次是关于<em>view state</em>的思考，剩下的内容可能不太有用，但书中也做了介绍，并且表明了原意，“希望多参考别的框架，然后能带来一些启发”。总之，我特别想对书中内容进行归纳和整理，以供自己思考。</p>
+<p>《App架构》电子书需要的话可以给我留言或者发邮件</p>
+<h2 id="关于架构自己的一些思考"><a href="#关于架构自己的一些思考" class="headerlink" title="关于架构自己的一些思考"></a>关于架构自己的一些思考</h2><p>在讲架构之前，我们可以考虑一下关于跨平台开发的思考。很久以前我会觉得语法是最大的问题，假设一开始app是iOS的，只要做一套Android版本的语法翻译或者类似实现，然后好像就没什么问题了。</p>
+<p>后来我学习了一些其他语言，发现语法问题真的影响很小:</p>
 <ul>
-<li><p><strong>slideMenuViewController(:, viewControllerForItemAt:)</strong> 这个方法可以根据index去决定需要显示的view controller，并且该index对应的view controller会被持有。只在该index第一次被选中时会触发。</p>
-</li>
-<li><p><strong>slideMenuViewController(:, didChange:)</strong> 这个方法在每次选中不同index都会回调，方便更新之前创建的view controller。</p>
-</li>
+<li>先说说学习的时间成本问题，一种新语言的语法我用比较慢的速度学习，也仅仅需要两周时间就能掌握了，甚至更少.（这不包括一些额外的框架的学习时间，比如学习objective-c，仅仅是语法，不包括UIKit等框架的学习。）</li>
+<li>另外不同的语法之间自动转换接口，在未来应该也是可以预见的。（比如现在objective-c和Swift之间就能桥接，互相提供准确的接口。）</li>
 </ul>
-<p>🤔具体的使用方法，可以参照代码。</p>
-<h2 id="sample地址"><a href="#sample地址" class="headerlink" title="sample地址"></a>sample地址</h2><h3 id="10000ui"><a href="#10000ui" class="headerlink" title="10000ui"></a><a href="https://github.com/blurryssky/10000ui" target="_blank" rel="noopener">10000ui</a></h3>
+<p>其次，假设真的Android版本实现了，只要稍微想想就能知道，其中重复意义的代码是非常多的。比如两个app都设置了完全相同的Model，完全相同的请求网络数据的逻辑，可以说在数据显示在屏幕之前，大部分的逻辑都是重复的。</p>
+<p>真正的不同之处，是自身系统对特定操作做的库，比如不同的UI框架、媒体处理框架等，因为使用这些框架的时候，通常为了实现一个效果，也可能使用完全不同的逻辑。</p>
+<p>所以如果在使用这些特定框架之前，能够细心地设计接口，把之前的那些逻辑完全解耦出来，达到可以放心的交给机器自动翻译的程度，然后在针对各个平台的特性，去完成需要使用特定框架完成的逻辑。这样的跨平台产品，最大程度的复用了代码或者说app逻辑，同时具备自身平台的特性。</p>
+<hr>
+<p>App的本质是一个反馈回路，程序启动、界面展示、用户交互、数据处理、重新展示到界面。架构就是关于这一系列流程的思考，在书写代码上会体现成一种写法规范，只有真正了解了架构的意义，才能去完整的遵守这种规范，因为代码的自由度是非常高的，能最终实现需求的代码，答案是很有多种的，也正是这种原因，代码的质量有高有低，也引发了我们的思考，如何设计更加健壮的代码。</p>
+<p>在一个良好的架构面前，很多不太好处理的问题会变得极其简单，比如说:</p>
+<ul>
+<li>换皮肤。因为view层是完全解耦的，只需要重新设计新的view层，然后连接接口即可。</li>
+<li>在没有网络时展示上次缓存的数据。因为model层能够控制缓存和刷新机制，而view层的展示完全基于model层的数据。</li>
+<li>使用单向数据流的方式，让app保持状态一致，统一UI的更新路径，避免冗余代码。</li>
+</ul>
+<p>我只是随便列举了几个，优点不再赘述了。</p>
+<h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h1><p>回到书里的章节开始，作为iOS开发者，我们最先接触的都是苹果的MVC框架，也是一直以来大部分人所使用的。</p>
+<p><img src="1.png" alt="1"></p>
+<p>1框图表达的逻辑很清晰:</p>
+<ol>
+<li>view接收到用户的交互事件</li>
+<li>controller处理</li>
+<li>修改model</li>
+<li>再由controller获取到被修改后的model信息</li>
+<li>更新view，反馈给用户</li>
+</ol>
+<p>但其实在实际开发中，很少有人能严格遵守规则，第4步通常会被略过，而第3步在修改model之后，同时就直接去更改了view，也是这个原因，有时候会造成数据与UI不同步的bug。</p>
+<p>究其原因，我认为是MVC真正的意义并没有被得到透彻的理解</p>
+<h2 id="Model和View"><a href="#Model和View" class="headerlink" title="Model和View"></a>Model和View</h2><p><strong>Model</strong>: model层是app的内容，是对app的抽象，完整的model层应该能完全代表一个没有界面的app。它是完全解耦的，阻止model层跨平台的唯一障碍应该是语言的语法问题。除此之外，根据书中的定义，能被存储在磁盘里的model被叫做<em>文档model</em>。</p>
+<p><strong>View</strong>: view层是依赖app框架的部分，它让model层变得可见，允许用户交互。iOS里通常使用UIKit，也可能使用SceneKit或者OpenGL，它是需要根据系统平台来书写不同实现路径的代码的。</p>
+<h2 id="App的本质是反馈回路"><a href="#App的本质是反馈回路" class="headerlink" title="App的本质是反馈回路"></a>App的本质是反馈回路</h2><p><img src="2.png" alt="2"></p>
+<ul>
+<li>2框图显示了view和model之间的交流，view发出交互事件，叫<em>view action</em>。</li>
+<li>比如点击按钮，送到model的时候，model层可能需要删除某个数据，叫做<em>model action</em>。</li>
+<li>修改完毕之后，会触发<em>model通知</em>，在对应的view收到通知后，会根据model的内容做<em>view变更</em>，这样一次交互反馈就完成了。这里的通知并不只是代表<code>Notification</code>，而是一切可以触发代码消息的框架技术。</li>
+<li>但这并不完全，有些状态其实没有被保存在model里，比如一个table view的content offset或者导航栈的位置，这些状态叫做<em>view state</em>，它们通常被存储在view层，由view对象各自的属性维持，有些架构会把<em>view state</em>放到model层，有时候为了方便的实现某种需求，我也会把某些暂存在model里，比如像isSelected这样的选中状态。</li>
+</ul>
+<p>如果app的逻辑真的像2框图一样，路径如此的清晰和规范，书中称它们为<em>单向数据流</em>。当任意的view对象或者中间层对象只能够通过model发出的通知来进行创建和更新 (换句话说，view 或者中间层不能通过捷径来更新自身或者其他的 view) 时，这个模式通常就是单项的。这是一种理想状态，稍微有经验的开发者能够体会到，这是非常好的模式，代码会变得非常健壮，因为view和model的状态一定是同步的，这能避免很多bug产生。</p>
+<h2 id="架构技术"><a href="#架构技术" class="headerlink" title="架构技术"></a>架构技术</h2><p>关于model通知的发出，可以使Apple的<code>Notification</code>或者<code>KVO</code>，但这些工具十分有限，有些开发者会对这些工具进行封装，使其变得更好用，但其实不如使用一些第三方工具，使用响应式编程，比如<code>RAC</code>或者<code>RxSwift</code>，它们专注于在源和目标之间进行变形，让逻辑可以在部件之间传输信息的同时得以表达。</p>
+
 
                 <hr>
 
@@ -212,12 +244,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2018/11/30/《App架构》读书笔记（一）介绍/" data-toggle="tooltip" data-placement="top" title="《App架构》读书笔记（一）介绍">&larr; Previous Post</a>
+                            <a href="/2018/12/03/《App架构》读书笔记（二）MVC/" data-toggle="tooltip" data-placement="top" title="《App架构》读书笔记（二）MVC">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/2018/11/27/辩解/" data-toggle="tooltip" data-placement="top" title="辩解">Next Post &rarr;</a>
+                            <a href="/2018/11/27/SlideMenuViewController/" data-toggle="tooltip" data-placement="top" title="SlideMenuViewController">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -252,8 +284,6 @@
                        
                           <a class="tag" href="/tags/#iOS开发" title="iOS开发">iOS开发</a>
                         
-                          <a class="tag" href="/tags/#custom UI" title="custom UI">custom UI</a>
-                        
                     </div>
                 </section>
                 
@@ -273,8 +303,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blurrysskys-name";
-    var disqus_identifier = "https://blurryssky.github.io/2018/11/27/SlideMenuViewController/";
-    var disqus_url = "https://blurryssky.github.io/2018/11/27/SlideMenuViewController/";
+    var disqus_identifier = "https://blurryssky.github.io/2018/11/30/《App架构》读书笔记（一）介绍/";
+    var disqus_url = "https://blurryssky.github.io/2018/11/30/《App架构》读书笔记（一）介绍/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

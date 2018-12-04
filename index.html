@@ -90,14 +90,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -181,6 +181,101 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2018/12/04/《App架构》读书笔记（四）网络/">
+        <h2 class="post-title">
+            《App架构》读书笔记（四）网络
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            网络现在讨论的是关于网络层的处理，假设使用MVC架构，书中对比了两种方式：
+
+Controller拥有网络。Controller直接控制发起网络请求，创建model，是比较常见的方式。如果要添加数据缓存到本地，通常这些逻辑也会写在controller里，使controller变得臃肿。它最大的优点是逻辑简单，目前大部分开发者都是这样写的。
+Model拥有网络。Model从网络获取数据后，co......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by blurryssky on
+        2018-12-04
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/03/《App架构》读书笔记（三）MVVM/">
+        <h2 class="post-title">
+            《App架构》读书笔记（三）MVVM
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            4.Model-View-ViewModel
+Model-View-ViewModel(MVVM)是一种基于MVC进行改进的模式，它将所有model相关的任务(包括更新model，观察变更，将model变形为可以显示的形式等)从controller层抽离出来，放到新的叫做view-model的一层对象中。在通常的iOS实现中，view-model位于model和controller之间:
+
+......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by blurryssky on
+        2018-12-03
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/03/《App架构》读书笔记（二）MVC/">
+        <h2 class="post-title">
+            《App架构》读书笔记（二）MVC
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            (使用的序号对应的是书中的章节，但没有把所有章节都列出来)
+3.Model-View-Controller
+MVC的核心思想是，controller层负责将model层和view层撮合到一起工作。Controller对另外两层进行构建和配置，并对model对象和view对象之间的双向通讯进行协调。所以，在一个MVC app中，controller层是作为核心来参与形成app的反馈回路的:
+
+......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by blurryssky on
+        2018-12-03
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/11/30/《App架构》读书笔记（一）介绍/">
+        <h2 class="post-title">
+            《App架构》读书笔记（一）介绍
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            《App架构》书籍地址objc真的是非常棒的网站，上面有很多高质量的文章，非常适合学习和反复学习。以及它的中国翻译版本objccn，正如它所说为中国 Apple 开发社区带来最佳实践和先进技术。
+近期读了objccn出品的《App架构》(《App Architecture》的翻译版本)，觉得收获很大。其中特别有帮助的章节是关于MVC、MVVM架构和关于网络层的讨论，其次是关于view sta......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by blurryssky on
+        2018-11-30
+    </p>
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -325,98 +420,6 @@ OverviewAR给用户提供新的交互方式。但是，许多人性化交互设�
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/01/11/Building Your First AR Experience(译)/">
-        <h2 class="post-title">
-            Building Your First AR Experience(译)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            文档地址😋要做一个AR效果，比如把一只小火龙放在桌子上，我们依靠SceneKit或者SpriteKit来提供小火龙虚拟图像，依靠ARKit为我们提供桌面的位置和大小。
-创建一个使用AR session，并且使用plane detection来放置SceneKit3D内容的APP。(建议去文档地址里把DEMO APP下载下来，先装上试试看，以便理解。)
-Overview这个实例APP使用AR......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by blurryssky on
-        2018-01-11
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/01/11/About Augmented Reality and ARKit(译)/">
-        <h2 class="post-title">
-            About Augmented Reality and ARKit(译)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            文档地址😋这几天看了几个AR应用，觉得屌爆了，赶快插播ARKit了解一下
-探索支持的概念，特点，以及练习构建一个AR体验。
-OverviewAR的基本要求，同时也是AR的定义，是创建并且跟踪一个在 用户存在的真实世界空间 和 一个你可以模拟虚拟内容的虚拟世界 之间的通信介质。当你的APP把内容和一个动态的相机图片一起展示出来，用户就体验到AR了：是一种你的虚拟内容是真实世界的一部分的错觉。......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by blurryssky on
-        2018-01-11
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/01/07/Setting Up Layer Objects(译)/">
-        <h2 class="post-title">
-            Setting Up Layer Objects(译)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            文档地址😑有些翻译的不通顺的地方，一定是我还没理解透，有些口水话直接不翻译了
-layer是CoreAnimation的核心。layer管理APP的视觉的内容，提供给改变内容风格和视觉外形的选项。iOS APP已经自动打开了layer支持，OS X APP必须显示指定打开支持。一旦启用，你需要知道如何配置和操作这些layer。
-Enabling Core Animation Support ......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by blurryssky on
-        2018-01-07
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/01/06/博客更新计划/">
-        <h2 class="post-title">
-            博客更新计划
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            😁其实我一直是个随性的人，从来不做计划，有好有坏吧，我离开家来到陌生的地方，没有那么多随性的事去做，事实上周末可能都很无聊，我不想浪费时间，除了生活上花去的时间，比如玩游戏买衣服健身休息吃饭，我还有很多时间，为了避免自己漫无目的的在网上乱逛，我需要给自己任务，定制计划，让自己坚持学习，同时更新博客。
-
-iOS知识总结，总结一些平时开发不常用到的iOS知识，大部分属于理论知识，可以方便大家更......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by blurryssky on
-        2018-01-06
-    </p>
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -452,7 +455,7 @@ iOS知识总结，总结一些平时开发不常用到的iOS知识，大部分�
                     <div class="tags">
                         
                             
-                            <a href="/tags/#iOS开发" title="iOS开发" rel="9">iOS开发</a>
+                            <a href="/tags/#iOS开发" title="iOS开发" rel="13">iOS开发</a>
                             
                         
                             
