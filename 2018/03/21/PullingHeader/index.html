@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword"  content="iOS">
+    <meta name="description" content>
+    <meta name="keyword" content="iOS">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
     <title>
@@ -158,7 +158,7 @@
         background-image: url('/img/home-new-bg.jpg')
     }
 </style>
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -209,7 +209,7 @@
 <li><strong>shouldTransition(fraction:)</strong> 和上面的第一个方法类似，这里只需要在合适的下拉位置来决定是否转场。</li>
 </ul>
 <h2 id="通过PullingHeader对象，来管理下拉过程"><a href="#通过PullingHeader对象，来管理下拉过程" class="headerlink" title="通过PullingHeader对象，来管理下拉过程:"></a>通过<code>PullingHeader</code>对象，来管理下拉过程:</h2><p>通过上面的协议，<code>PullingHeader</code>会自动变化状态，并且在初始化方法中，<code>PullingHeader</code>需要得到所有信息。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">init</span>(scrollView: <span class="type">UIScrollView</span>!,</span><br><span class="line">         pullToRefreshView toRefresh: <span class="type">PullingRefreshing</span>!,</span><br><span class="line">         refreshClosure: ((<span class="type">PullingHeader</span>) -&gt; <span class="type">Void</span>)!,</span><br><span class="line">         pullToTransitionViewController toTransition: <span class="type">PullingTransitioning</span>? = <span class="literal">nil</span>,</span><br><span class="line">         transitionClosure: ((<span class="type">PullingHeader</span>) -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">init</span>(scrollView: <span class="type">UIScrollView!</span>,</span><br><span class="line">         pullToRefreshView toRefresh: <span class="type">PullingRefreshing!</span>,</span><br><span class="line">         refreshClosure: ((<span class="type">PullingHeader</span>) -&gt; <span class="type">Void</span>)!,</span><br><span class="line">         pullToTransitionViewController toTransition: <span class="type">PullingTransitioning?</span> = <span class="literal">nil</span>,</span><br><span class="line">         transitionClosure: ((<span class="type">PullingHeader</span>) -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
 <p>因为转场不是必要的，所以后面两个参数可以是nil。</p>
 <blockquote>
 <p><code>scrollView、pullToRefreshView、pullToTransitionViewController</code> 都是<code>weak</code>属性</p>
@@ -271,6 +271,17 @@
                 
 
                 <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="#" target="_blank">Void</a></li>
+                    
+                        <li><a href="#" target="_blank">Placeholder</a></li>
+                    
+                </ul>
                 
             </div>
 
@@ -352,7 +363,7 @@
 
                 
                     <li>
-                        <a target="_blank"  href="https://github.com/blurryssky">
+                        <a target="_blank" href="https://github.com/blurryssky">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -372,10 +383,7 @@
                         <i class="fa fa-heart"></i>
                     </span> 
                     Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="91px" height="20px" src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true">
                     </iframe>
                 </p>
             </div>

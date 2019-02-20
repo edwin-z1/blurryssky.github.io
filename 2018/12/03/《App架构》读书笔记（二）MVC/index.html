@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword"  content="iOS">
+    <meta name="description" content>
+    <meta name="keyword" content="iOS">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
     <title>
@@ -158,7 +158,7 @@
         background-image: url('/img/home-new-bg.jpg')
     }
 </style>
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -226,9 +226,13 @@
 <p>把初始化方法封装起来，减少在view controller里创建的代码，也能防止因为忘记传值而出错。</p>
 <h3 id="在扩展里进行代码重用"><a href="#在扩展里进行代码重用" class="headerlink" title="在扩展里进行代码重用"></a>在扩展里进行代码重用</h3><blockquote>
 <p>要在不同的view controller间共享代码，一个常⻅的方法是创建一个包含共通功能的父类。然后view controller就可以通过子类来获得这些功能了。这种技术可以工作，但是它有一个潜在的不足:我们只能为我们的新类选定单个父类。比如说，我们不能同时继承UIPageViewController和UITableViewController。</p>
+</blockquote>
 <hr>
+<blockquote>
 <p>这种方式还经常会导致我们常说的<strong>上帝view controller</strong>的问题:一个共享的父类包括了项目中全部的共享的功能。这样的类通常会变得非常复杂，难以维护。</p>
+</blockquote>
 <hr>
+<blockquote>
 <p>在view controller中共享代码的另一种选择是使用扩展。在多个view controller中都出现的方法有时候能够被添加到 UIViewController的扩展中去。这样一来，所有的view controller就都能获取这个方法了。</p>
 </blockquote>
 <p>在这个程度之上，为了更加有区别的对待某些功能，我们还可以把它们归类到协议里，然后在协议扩展里实现这些方法。这样view controller在需要某些功能时，必须显式的指定遵循某个协议。这就像是多继承的使用方法，并且由于有显式的声明，能让开发者能清楚地了解这个view controller得到了哪些功能。</p>
@@ -296,6 +300,17 @@
                 
 
                 <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="#" target="_blank">Void</a></li>
+                    
+                        <li><a href="#" target="_blank">Placeholder</a></li>
+                    
+                </ul>
                 
             </div>
 
@@ -377,7 +392,7 @@
 
                 
                     <li>
-                        <a target="_blank"  href="https://github.com/blurryssky">
+                        <a target="_blank" href="https://github.com/blurryssky">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -397,10 +412,7 @@
                         <i class="fa fa-heart"></i>
                     </span> 
                     Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="91px" height="20px" src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true">
                     </iframe>
                 </p>
             </div>

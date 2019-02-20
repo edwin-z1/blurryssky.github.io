@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword"  content="iOS">
+    <meta name="description" content>
+    <meta name="keyword" content="iOS">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
     <title>
@@ -158,7 +158,7 @@
         background-image: url('/img/home-new-bg.jpg')
     }
 </style>
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -203,7 +203,7 @@
 <li>在用户面部贴上虚拟的3D内容（3D内容可以被用户的脸遮挡）。</li>
 <li>一个会跟着用户面部变化而动画的简单机器人。</li>
 </ul>
-<h2 id="Start-a-Face-Tracking-Session-in-a-SceneKit-View"><a href="#Start-a-Face-Tracking-Session-in-a-SceneKit-View" class="headerlink" title="Start a Face Tracking Session in a SceneKit View"></a>Start a Face Tracking Session in a SceneKit View</h2><p>像其他的<code>ARKit</code>用法一样，脸部跟踪需要配置和启动<code>ARSession</code>对象，然后把摄像图片和虚拟内容在一个<em>view</em>上渲染。关于更多的设置<em>session</em>和<em>view</em>的细节,请看<a href="">About Augmented Reality and ARKit</a>、<a href="">Building Your First AR Experience</a>。这里使用<code>SceneKit</code>来展示AR体验，也可以用<code>SpriteKit</code>或用<code>Metal</code>打造自定义的渲染器，请看（<a href="">ARSKView and Displaying an AR Experience with Metal</a>）。启用面部跟踪，需要创建一个<code>ARFaceTrackingConfiguration</code>实例，配置它的属性，把它传有<em>view</em>关联的<code>ARSession</code>对象的<strong>run(_:options:)</strong>方法，示例如下。</p>
+<h2 id="Start-a-Face-Tracking-Session-in-a-SceneKit-View"><a href="#Start-a-Face-Tracking-Session-in-a-SceneKit-View" class="headerlink" title="Start a Face Tracking Session in a SceneKit View"></a>Start a Face Tracking Session in a SceneKit View</h2><p>像其他的<code>ARKit</code>用法一样，脸部跟踪需要配置和启动<code>ARSession</code>对象，然后把摄像图片和虚拟内容在一个<em>view</em>上渲染。关于更多的设置<em>session</em>和<em>view</em>的细节,请看<a href>About Augmented Reality and ARKit</a>、<a href>Building Your First AR Experience</a>。这里使用<code>SceneKit</code>来展示AR体验，也可以用<code>SpriteKit</code>或用<code>Metal</code>打造自定义的渲染器，请看（<a href>ARSKView and Displaying an AR Experience with Metal</a>）。启用面部跟踪，需要创建一个<code>ARFaceTrackingConfiguration</code>实例，配置它的属性，把它传有<em>view</em>关联的<code>ARSession</code>对象的<strong>run(_:options:)</strong>方法，示例如下。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">guard</span> <span class="type">ARFaceTrackingConfiguration</span>.isSupported <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line"><span class="keyword">let</span> configuration = <span class="type">ARFaceTrackingConfiguration</span>()</span><br><span class="line">configuration.isLightEstimationEnabled = <span class="literal">true</span></span><br><span class="line">session.run(configuration, options: [.resetTracking, .removeExistingAnchors])</span><br></pre></td></tr></table></figure>
 <p>记得使用<strong>ARFaceTrackingConfiguration.isSupported</strong>来检查设备是否支持。</p>
 <h2 id="Track-the-Position-and-Orientation-of-a-Face"><a href="#Track-the-Position-and-Orientation-of-a-Face" class="headerlink" title="Track the Position and Orientation of a Face"></a>Track the Position and Orientation of a Face</h2><p>面部追踪启用时，<code>ARKit</code>自动为运行的<em>AR session</em>添加<code>ARFaceAnchor</code>对象，这个对象包含了用户脸部的信息，包括位置和方向。</p>
@@ -291,6 +291,17 @@
 
                 <!-- Friends Blog -->
                 
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="#" target="_blank">Void</a></li>
+                    
+                        <li><a href="#" target="_blank">Placeholder</a></li>
+                    
+                </ul>
+                
             </div>
 
         </div>
@@ -371,7 +382,7 @@
 
                 
                     <li>
-                        <a target="_blank"  href="https://github.com/blurryssky">
+                        <a target="_blank" href="https://github.com/blurryssky">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -391,10 +402,7 @@
                         <i class="fa fa-heart"></i>
                     </span> 
                     Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="91px" height="20px" src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true">
                     </iframe>
                 </p>
             </div>
