@@ -90,14 +90,14 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -191,7 +191,7 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>现在讨论的是关于网络层的处理，假设使用MVC架构，书中对比了两种方式：</p>
+                <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>现在讨论关于网络层的处理，假设使用MVC架构，书中对比了两种方式：</p>
 <ol>
 <li>Controller拥有网络。Controller直接控制发起网络请求，创建model，是比较常见的方式。如果要添加数据缓存到本地，通常这些逻辑也会写在controller里，使controller变得臃肿。它最大的优点是逻辑简单，目前大部分开发者都是这样写的。</li>
 <li>Model拥有网络。Model从网络获取数据后，controller通过观察model变更通知来更新。这会在处理起来稍微麻烦一些，但是它能让代码分层，并且更符合单向数据流。而且如果要添加缓存功能的话，也能很轻松的添加在model层，由于controller本来就是观察model变更来更新的，model可以在一开始的时候就读取缓存，然后再请求网络。不仅逻辑结合的更加紧密，controller也变得简洁了。这里的model会和普通的model稍微不一样一点，其实是一个类似于数据管理者的概念，比如现在需要请求一个列表，产生一个数组，那这个数组其实会成为model的一个属性，而不是models。</li>
@@ -207,6 +207,10 @@
                 
 
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2019/02/19/《Data Structures and Algorithms in Swift》摘抄/" data-toggle="tooltip" data-placement="top" title="《Data Structures and Algorithms in Swift》摘抄">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -344,7 +348,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; blurryssky&#39;s blog 2018 
+                    Copyright &copy; blurryssky&#39;s blog 2019 
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
