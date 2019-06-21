@@ -212,7 +212,7 @@
 <p><strong>copy-on-write</strong></p>
 <p>可以避免<strong>cow</strong>的情况:</p>
 <ol>
-<li><p>引用技术为1</p>
+<li><p>引用计数为1</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">guard</span> !isKnownUniquelyReferenced(&amp;head) <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>只插入头部时<br><img src="linked_list_head_insertion.png" alt></p>
@@ -318,14 +318,15 @@
 <h2 id="O-n2-sorting"><a href="#O-n2-sorting" class="headerlink" title="O(n2) sorting"></a>O(n2) sorting</h2><ol>
 <li>Bubble</li>
 <li>Selection. Find the lowest value and swap to i.</li>
-<li>Insertion. 和冒泡算法不同的是，被交换的值会一直被比较到最后的位置。</li>
+<li>Insertion. 和选择类似，只是直接交换而不是去寻找i。</li>
 </ol>
-<h2 id="merge-sort"><a href="#merge-sort" class="headerlink" title="merge sort"></a>merge sort</h2><p>不停的分割直到只有1个值，然后把分割后的值两两合并，合并的时候排序。<br>O(logn).</p>
+<h2 id="merge-sort"><a href="#merge-sort" class="headerlink" title="merge sort"></a>merge sort</h2><p>不停的分割直到只有1个值，然后把分割后的值两两合并，合并的时候排序。<br>O(nlogn).</p>
 <h2 id="radix-sort"><a href="#radix-sort" class="headerlink" title="radix sort"></a>radix sort</h2><p>不通过比较，按位数依次放进“篮子”里，最后再拍平成数组。<br>O(k*n).k is the longest digit.</p>
 <h2 id="heap-sort"><a href="#heap-sort" class="headerlink" title="heap sort"></a>heap sort</h2><p><img src="heap_sort.png" alt></p>
-<p>swap and siftDown. O(logn).</p>
+<p>swap and siftDown. O(nlogn).</p>
 <h2 id="quicksort"><a href="#quicksort" class="headerlink" title="quicksort"></a>quicksort</h2><p><img src="quick_sort.png" alt></p>
-<p>pivot的选择对时间复杂度影响很大，有一种策略是使用首位、中间位、末位三个数中的中间值作为pivot。<br>O(logn).</p>
+<p>pivot的选择对时间复杂度影响很大，有一种策略是使用首位、中间位、末位三个数中的中间值作为pivot。<br>O(nlogn).</p>
+<p>如果基本已经排好序，复杂度为O(n2)</p>
 <h2 id="graphs"><a href="#graphs" class="headerlink" title="graphs"></a>graphs</h2><p><img src="graph.png" alt></p>
 <p><img src="graph_analysis.png" alt></p>
 <h2 id="breadth-first"><a href="#breadth-first" class="headerlink" title="breadth first"></a>breadth first</h2><p><img src="breadth_first.png" alt></p>
